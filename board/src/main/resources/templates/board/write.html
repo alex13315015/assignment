@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/layout/layout}">
+<div layout:fragment="content" class="main">
+    <div class="container">
+        <h2>글쓰기</h2>
+        <form method="post" action="/board/write" th:action="@{/board/write}" th:object="${boardDto}">
+            <div class="mb-3">
+                <label for="title" class="form-label">제목</label>
+                <input type="text" class="form-control" placeholder="제목을 입력해주세요." th:field="*{title}" >
+                <p th:if="${#fields.hasErrors('title')}" th:errors="*{title}" class="error"></p>
+            </div>
+            <div class="mb-3">
+                <label for="name" class="form-label">이름</label>
+                <input type="text" class="form-control" placeholder="작성자"  th:field="*{name}">
+                <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="error"></p>
+            </div>
+
+            <div class="mb-3">
+                <label for="content" class="form-label">내용</label>
+                <textarea class="form-control" rows="5" th:field="*{content}"></textarea>
+                <p th:if="${#fields.hasErrors('content')}" th:errors="*{content}" class="error"></p>
+            </div>
+
+            <div class="mt-5">
+                <button class="btn btn-primary" id="btnSubmit">등록</button>
+            </div>
+        </form>
+    </div>
+    <script src="https://cdn.ckeditor.com/ckeditor5/40.0.0/classic/ckeditor.js"></script>
+        <script>
+            ClassicEditor
+            .create( document.querySelector( '#content' ), {
+                ckfinder : {
+                    uploadUrl : "/board/upload"
+                }
+            } )
+            .catch( error => {
+            console.error( error );
+        } );
+    </script>
+</div>
+</html>

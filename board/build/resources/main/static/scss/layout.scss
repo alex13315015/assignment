@@ -1,0 +1,17 @@
+.main {
+  min-height: 500px;
+  h2 {
+    margin: 30px 0;
+  }
+}
+.error {
+  font-size: 12px;
+  color: #f00;
+  margin-top: 10px;
+}
+
+#viewModal {
+  .content {
+    white-space: pre-wrap;
+  }
+}

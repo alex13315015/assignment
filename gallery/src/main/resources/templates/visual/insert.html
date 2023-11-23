@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <script src="/js/bootstrap.bundle.min.js"></script>
+</head>
+<body>
+    <div class="container mt-5 mb-5">
+        <form action="/visual/insert" method="post" enctype="multipart/form-data">
+        <div class="mb-3">
+            <label for="title" class="form-label">title</label>
+            <input type="text" class="form-control" name="title" id="title" placeholder="title">
+        </div>
+        <div class="mb-3">
+            <label for="description" class="form-label">description</label>
+            <textarea class="form-control" name="description" id="description" rows="3"></textarea>
+        </div>
+        <div class="mb-3">
+            <label for="link" class="form-label">link</label>
+            <input type="text" class="form-control" name="link" id="link" placeholder="link">
+        </div>
+
+        <div class="mb-3">
+            <label for="file" class="form-label">file</label>
+            <input class="form-control" type="file" name="file" id="file">
+        </div>
+        <div class="d-flex justify-content-center mt-5">
+        <button class="btn btn-secondary">확인</button>
+        </div>
+        </form>
+    </div>
+</body>
+</html>

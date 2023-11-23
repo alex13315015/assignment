@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ryan9025.board.dao.BoardDao">
+    <sql id="search">
+        <if test="category != null and searchTxt != '' ">
+            <choose>
+                <when test="category == 'all' ">
+                    where title like '%' || #{searchTxt} || '%' or
+                          name like '%' || #{searchTxt} || '%'  or
+                          content like '%' || #{searchTxt} || '%'
+                </when>
+                <when test="category == 'title' ">
+                    where title like '%' || #{searchTxt} || '%'
+                </when>
+                <when test="category == 'name' ">
+                    where name like '%' || #{searchTxt} || '%'
+                </when>
+                <when test="category == 'content' ">
+                    where content like '%' || #{searchTxt} || '%'
+                </when>
+            </choose>
+        </if>
+    </sql>
+    <select id="getAllBoard" resultType="BoardDto" parameterType="Criteria">
+
+
+
+            select * from (
+                select rownum as num, b.* from
+                    (select * from board <include refid="search" /> order  by regdate desc) b
+            )
+        where num <![CDATA[>=]]> #{startPage} and num <![CDATA[<=]]> #{endPage}
+
+    </select>
+<!-- #{속성값} 은 getter의 값을 가져온다.-->
+    <select id="getOneBoard" resultType="BoardDto" parameterType="int">
+        select * from board where id = #{id}
+    </select>
+
+    <insert id="insertBoard" parameterType="BoardDto">
+        insert into board values(board_seq.nextval,#{name},#{title},#{content},sysdate)
+    </insert>
+
+    <delete id="deleteBoard" parameterType="int">
+        delete from board where id = #{id}
+    </delete>
+
+    <update id="modifyBoard" parameterType="BoardDto">
+        update board set name = #{name}, title = #{title}, content = #{content} where id = #{id}
+    </update>
+
+    <select id="getTotalCount" resultType="int" parameterType="Criteria">
+        select count(*) as count from board
+        <include refid="search" />
+    </select>
+
+</mapper>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ryan9025.board.dao.MemberDao">
+    <insert id="insertMember" parameterType="MemberDto">
+        insert into member values(
+            member_seq.nextval,
+            #{id},
+            #{password},
+            #{name},
+            #{email},
+            'ROLE_MEMBER',
+            1,
+            sysdate
+        )
+    </insert>
+    <select id="loginMember" parameterType="String" resultType="MemberDto">
+        select * from member where id = #{id}
+    </select>
+    <update id="deleteMember" parameterType="LoginDto">
+        update member set status = 0 where id = #{id}
+    </update>
+    <update id="updateMember" parameterType="MemberDto">
+        update member set name = #{name}, email = #{email} where id = #{id}
+    </update>
+
+    <insert id="insertQuitMember" parameterType="MemberDto">
+        insert into quitMember values(
+        quitMember_seq.nextval,
+        #{id},
+        #{name},
+        sysdate
+        )
+    </insert>
+
+    <update id="updatePassword" parameterType="UpdateDto">
+        update member set password = #{password} where email = #{email}
+    </update>
+</mapper>

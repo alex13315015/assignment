@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/layout/layout}">
+<div layout:fragment="content" class="main">
+    <div class="container">
+        <h2>메일</h2>
+        <form method="post" action="/mail/send">
+            <div class="mb-3">
+                <label for="receiver" class="form-label">받는사람</label>
+                <input type="text" class="form-control" id="receiver" name="receiver" >
+            </div>
+            <div class="mb-3">
+                <label for="title" class="form-label">제목</label>
+                <input type="text" class="form-control" id="title" name="title" placeholder="제목을 입력해주세요.">
+            </div>
+
+            <div class="mb-3">
+                <label for="content" class="form-label">내용</label>
+                <textarea class="form-control" rows="5" id="content" name="content"></textarea>
+            </div>
+            <div class="mt-5">
+                <button class="btn btn-primary" id="btnSubmit">메일전송</button>
+            </div>
+        </form>
+    </div>
+    <script src="https://cdn.ckeditor.com/ckeditor5/40.0.0/classic/ckeditor.js"></script>
+    <script>
+        ClassicEditor
+            .create( document.querySelector( '#content' ), {
+                ckfinder : {
+                    uploadUrl : "/board/upload"
+                }
+            } )
+            .catch( error => {
+                console.error( error );
+            } );
+    </script>
+</div>
+</html>

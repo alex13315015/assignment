@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <typeAliases>
+        <typeAlias alias="BoardDto" type="com.ryan9025.board.dto.BoardDto"/>
+        <typeAlias alias="Criteria" type="com.ryan9025.board.dto.Criteria"/>
+        <typeAlias alias="MemberDto" type="com.ryan9025.board.dto.MemberDto"/>
+        <typeAlias alias="LoginDto" type="com.ryan9025.board.dto.LoginDto"/>
+        <typeAlias alias="UpdateDto" type="com.ryan9025.board.dto.UpdateDto"/>
+    </typeAliases>
+
+</configuration>

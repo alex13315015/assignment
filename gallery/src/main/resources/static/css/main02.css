@@ -1,0 +1,124 @@
+#main {
+  overflow: hidden;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background: url("../images/bg02.jpg") no-repeat;
+  background-size: cover;
+}
+#main #lnb {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 50px;
+  font-size: 24px;
+  font-weight: 700;
+  color: #fff;
+  z-index: 2;
+}
+#main #lnb li {
+  margin: 10px 0;
+  text-shadow: 3px 3px 3px rgba(0, 0, 0, 0.1);
+  position: relative;
+  cursor: pointer;
+  text-transform: uppercase;
+}
+#main #lnb li.on:before {
+  width: calc(100% + 10px);
+}
+#main #lnb li:before {
+  content: "";
+  display: block;
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  border-radius: 100px;
+  background-color: #f00;
+  left: -10px;
+  top: calc(50% - 1px);
+  transition: 0.25s ease;
+}
+#main #itemList {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  perspective: 5000px;
+  perspective-origin: 50% 10%;
+  padding-left: 200px;
+}
+#main #itemList li {
+  display: flex;
+  border-radius: 15px;
+  background-color: #fff;
+  padding: 40px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+  justify-content: space-between;
+  align-items: center;
+  width: 800px;
+  height: 450px;
+  position: absolute;
+}
+#main #itemList li .info {
+  width: 500px;
+}
+#main #itemList li .info .desc {
+  font-size: 16px;
+  margin-bottom: 20px;
+  line-height: 1.5;
+  color: #fff;
+}
+#main #itemList li .info .title {
+  color: #fff;
+  font-size: 42px;
+  font-weight: 700;
+  margin-bottom: 30px;
+  text-shadow: 3px 3px 3px rgba(0, 0, 0, 0.1);
+}
+#main #itemList li .info a {
+  display: flex;
+  width: 120px;
+  height: 60px;
+  justify-content: center;
+  align-items: center;
+  background-color: #fff;
+  overflow: hidden;
+  border-radius: 100px;
+  font-weight: 500;
+  text-shadow: 1px 1px 0px #cccccc,2px 2px 0px #cccccc,3px 3px 0px #cccccc,4px 4px 0px #cccccc,5px 5px 0px #cccccc,6px 6px 0px #cccccc,7px 7px 0px #cccccc,8px 8px 0px #cccccc,9px 9px 0px #cccccc,10px 10px 0px #cccccc,11px 11px 0px #cccccc,12px 12px 0px #cccccc,13px 13px 0px #cccccc,14px 14px 0px #cccccc,15px 15px 0px #cccccc,16px 16px 0px #cccccc,17px 17px 0px #cccccc,18px 18px 0px #cccccc,19px 19px 0px #cccccc,20px 20px 0px #cccccc,21px 21px 0px #cccccc,22px 22px 0px #cccccc,23px 23px 0px #cccccc,24px 24px 0px #cccccc,25px 25px 0px #cccccc,26px 26px 0px #cccccc,27px 27px 0px #cccccc,28px 28px 0px #cccccc,29px 29px 0px #cccccc,30px 30px 0px #cccccc,31px 31px 0px #cccccc,32px 32px 0px #cccccc,33px 33px 0px #cccccc,34px 34px 0px #cccccc,35px 35px 0px #cccccc,36px 36px 0px #cccccc,37px 37px 0px #cccccc,38px 38px 0px #cccccc,39px 39px 0px #cccccc,40px 40px 0px #cccccc,41px 41px 0px #cccccc,42px 42px 0px #cccccc,43px 43px 0px #cccccc,44px 44px 0px #cccccc,45px 45px 0px #cccccc,46px 46px 0px #cccccc,47px 47px 0px #cccccc,48px 48px 0px #cccccc,49px 49px 0px #cccccc,50px 50px 0px #cccccc;;
+}
+#main #itemList li .img {
+  position: absolute;
+  right: -100px;
+}
+#main #itemList li .img img {
+  height: 600px;
+}
+#main .pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 50px;
+}
+#main .pagination .swiper-pagination-bullet {
+  width: 14px;
+  height: 14px;
+  border: 3px solid #fff;
+  opacity: 1;
+  background-color: transparent;
+  transition: 0.25s ease;
+}
+#main .pagination .swiper-pagination-bullet-active {
+  background-color: #fff;
+}
+
+#loop {
+  position: fixed;
+  left: 200px;
+  top: 150px;
+  z-index: 99;
+}
+#loop img {
+  width: 150px;
+}
