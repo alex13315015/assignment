@@ -22,14 +22,28 @@ public class MailService {
     private final MemberDao memberdao;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
+
     public void sendMail(MailDto mailDto) {
+        MimeMessage message = javaMailSender.createMimeMessage();
+        try {
+            message.setFrom("alex7006@naver.com");
+            message.setRecipients(MimeMessage.RecipientType.TO,mailDto.getReceiver());
+            message.setSubject(mailDto.getTitle());
+            message.setText(mailDto.getContent(),"UTF-8","html");
+            javaMailSender.send(message);
+        } catch (MessagingException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+    /*public void sendMail(MailDto mailDto) {
         SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
         simpleMailMessage.setTo(mailDto.getReceiver());
         simpleMailMessage.setFrom("alex7006@naver.com");
         simpleMailMessage.setSubject(mailDto.getTitle());
         simpleMailMessage.setText(mailDto.getContent());
         javaMailSender.send(simpleMailMessage);
-    }
+    }*/
 
     private String randomNumber;
 
@@ -67,6 +81,6 @@ public class MailService {
                 .email(updateDto.getEmail())
                 .password(bCryptPasswordEncoder.encode(randomNum))
                 .build();
-        memberdao.updatePassword(updateDto);
+        memberdao.updatePassword(dbUpdateDto);
     }
 }

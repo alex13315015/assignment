@@ -1,8 +1,10 @@
 package com.ryan9025.board.controller;
 
+import com.ryan9025.board.code.ErrorCode;
 import com.ryan9025.board.dto.BoardDto;
 import com.ryan9025.board.dto.Criteria;
 import com.ryan9025.board.dto.ModalDto;
+import com.ryan9025.board.exception.BoardException;
 import com.ryan9025.board.service.BoardService;
 import com.ryan9025.board.utils.PaginationMaker;
 import jakarta.validation.Valid;
@@ -103,6 +105,9 @@ public class BoardController {
     public String getOneBoard(@PathVariable int id, Model model) {
         log.info("getOneBoard==={}", id);
         BoardDto boardDto = boardService.getOneBoard(id);
+        if(boardDto == null) {
+            throw new BoardException(ErrorCode.INVALID_REQUEST);
+        }
         model.addAttribute("boardDto", boardDto);
         return "/board/view";
     }
@@ -240,5 +245,12 @@ public class BoardController {
     log.info("여기로 들어온다");
     return "/error";
     }
+
+    @ExceptionHandler(BoardException.class)
+    public String runtimeHandle(Model model) {
+        model.addAttribute("title","오류");
+        return "/errors/error";
+    }
+
 }
 
