@@ -22,6 +22,14 @@
                 <input type="text" name="todo" id="todoTxt">
                 <button class="btnAdd">추가</button>
             </div>
+            <div class="todoListBox">
+                <ul class="todoList">
+                   <!-- <li data-no="1" class="yet">
+                        <span>밥먹기</span>
+                        <button class="btnDelete">삭제</button>
+                    </li>-->
+                </ul>
+            </div>
         </div>
     </div>
     <div class="calendar-box">
@@ -57,6 +65,7 @@
 
     const now = new Date();  //2024/11/24
 
+    let queryDate = `${now.getFullYear()}-${now.getMonth()}-${now.getDate()}`
 
     function makeCalendar(pickedYear, pickedMonth) {
         let output = "";
@@ -91,9 +100,17 @@
                     now.getFullYear() === firstDay.getFullYear() &&
                     now.getMonth() === firstDay.getMonth())
                 {
-                    output += `<li class="today"><span>${count}</span></li>`
+                    output += `<li class="today" data-date = "${count}"
+                                                 data-year = "${firstDay.getFullYear()}"
+                                                 data-month = "${firstDay.getMonth() + 1}"
+                                                 data-picked = "${firstDay.getFullYear()}-${firstDay.getMonth()}-${count}"
+                                ><span>${count}</span></li>`
                 } else {
-                    output += `<li><span>${count}</span></li>`
+                    output += `<li data-date = "${count}"
+                                   data-year = "${firstDay.getFullYear()}"
+                                   data-month = "${firstDay.getMonth() + 1}"
+                                   data-picked = "${firstDay.getFullYear()}-${firstDay.getMonth() + 1}-${count}"
+                                   ><span>${count}</span></li>`
                 }
                 count++;
             }
@@ -125,9 +142,42 @@
     });
 
     //추가를 눌렀을 때, 데이터 전달
-    $(".btnAdd").on("click",function () {
+    $(".btnAdd").on("click",function() {
         console.log("추가됐다!!");
-    })
+        $.ajax({
+            url: "/todo/insert",
+            method: "post",
+            data: {
+                todo:$("#todoTxt").val(),
+                pickedDate: queryDate,
+                isDone:"미완료"
+            },
+            success:function(result) {
+                console.log(result);
+                $(".todoList li").remove();
+                $.each(result,function(idx,item){
+                    $(".todoList").append(
+                        `<li data-no="1" class="yet">
+                        <span>${item.todo}</span>
+                        <button class="btnDelete">삭제</button>
+                    </li>`
+                    )
+                })
+            }
+        })
+    });
+
+    // 부모한테 Event위임!
+    $("body").on("click",".dates ul li",function() {
+        console.log("click");
+        queryDate = $(this).data("picked");
+        $(this).addClass("picked");
+        $(this).siblings().removeClass("picked");
+    });
+    //처음 렌더링된것만 인식!!
+    /*$(".dates ul li").on("click",function () {
+        console.log("click");
+    })*/
 
 </script>
 </body>

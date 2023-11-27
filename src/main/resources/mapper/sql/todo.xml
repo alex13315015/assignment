@@ -11,4 +11,8 @@
         #{isDone}
         )
     </insert>
+
+    <select id="getPickedDateTodo" parameterType="TodoDto">
+        select * from todo where pickedDate = #{pickedDate} order by no desc
+    </select>
 </mapper>
