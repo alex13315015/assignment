@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!--화면 크기에 맞춰줌!-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Title</title>
+
+    <link rel="stylesheet" href="/css/reset.css">
+    <link rel="stylesheet" href="/css/layout.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="/js/jquery-3.7.1.min.js"></script>
+
+
+</head>
+<body>
+    <div class="todo">
+        <div>
+            <div class="day" id="pickedDay">월</div>
+            <div class="date" id="pickedDate">27</div>
+            <div class="inputBox">
+                <input type="text" name="todo" id="todoTxt">
+                <button class="btnAdd">추가</button>
+            </div>
+        </div>
+    </div>
+    <div class="calendar-box">
+        <div class="calendar">
+          <div class="header">
+              <button class="prev">이전</button>
+              <div class="monthBox">
+                  <span class="year">2023</span>
+                  <span class="month">12</span>
+              </div>
+              <button class="next">다음</button>
+          </div>
+            <div class="days">
+                <ul>
+                    <li class="sun"><span>일</span></li>
+                    <li><span>월</span></li>
+                    <li><span>화</span></li>
+                    <li><span>수</span></li>
+                    <li><span>목</span></li>
+                    <li><span>금</span></li>
+                    <li class="sat"><span>토</span></li>
+                </ul>
+                <div class="dates">
+                    <ul>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+<script>
+    const leafYear =    [31,29,31,30,31,30,31,31,30,31,30,31];
+    const notLeafYear = [31,28,31,30,31,30,31,31,30,31,30,31];
+
+    const now = new Date();  //2024/11/24
+
+
+    function makeCalendar(pickedYear, pickedMonth) {
+        let output = "";
+        let count = 1;
+        const firstDay = new Date(pickedYear, pickedMonth, 1);  //2024/11/1
+        console.log(firstDay.getDay());  // 요일 얻어오기...
+        $(".monthBox .year").text(firstDay.getFullYear());
+        $(".monthBox .month").text(firstDay.getMonth() + 1);
+        //윤년 공식
+        let selectedYear;
+        if (firstDay.getFullYear() % 4 === 0) {
+            if (firstDay.getFullYear() % 100 === 0) {
+                selectedYear = notLeafYear;
+            }
+            selectedYear = leafYear;
+
+        } else {
+            selectedYear = notLeafYear;
+        }
+        if (firstDay.getFullYear() % 400 === 0) {
+            selectedYear = leafYear;
+        }
+
+        for (let i = 0; i < 42; i++) {
+            if (count > selectedYear[firstDay.getMonth()]) {
+                break;
+            }
+            if (i < firstDay.getDay()) {
+                output += `<li class="blank"><span></span></li>`
+            } else {
+                if (now.getDate() === count &&
+                    now.getFullYear() === firstDay.getFullYear() &&
+                    now.getMonth() === firstDay.getMonth())
+                {
+                    output += `<li class="today"><span>${count}</span></li>`
+                } else {
+                    output += `<li><span>${count}</span></li>`
+                }
+                count++;
+            }
+        }
+        $(".calendar-box .dates ul").html(output);
+        gsap.from(".calendar-box .dates ul li", {scale: 0, ease: "back", duration: 1, stagger: 0.02});
+    }
+
+    makeCalendar(now.getFullYear(),now.getMonth());
+
+    $(".calendar-box .dates ul li").on("click",function() {
+        console.log("날짜 클릭");
+    });
+
+    let pickedNow = new Date();
+
+    $(".calendar .header .prev").on("click",function (){
+        //자바스크립트는 월이 넘어가면 자동으로 년도는 바뀐다.        //console.log(now.getFullYear(),now.getMonth() + 2, 1)
+
+        pickedNow = new Date(pickedNow.getFullYear(), pickedNow.getMonth() - 1);
+        makeCalendar(pickedNow.getFullYear(), pickedNow.getMonth());
+    });
+
+    $(".calendar .header .next").on("click",function (){
+        //자바스크립트는 월이 넘어가면 자동으로 년도는 바뀐다.        //console.log(now.getFullYear(),now.getMonth() + 2, 1)
+
+        pickedNow = new Date(pickedNow.getFullYear(), pickedNow.getMonth() + 1);
+        makeCalendar(pickedNow.getFullYear(), pickedNow.getMonth());
+    });
+
+    //추가를 눌렀을 때, 데이터 전달
+    $(".btnAdd").on("click",function () {
+        console.log("추가됐다!!");
+    })
+
+</script>
+</body>
+</html>

@@ -1,0 +1,65 @@
+img { vertical-align: top; }
+
+body { background: repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.05) 1px, 0, transparent 50px) #333; font-family: "Poppins", "Noto Sans KR"; }
+
+button { background: none; border: none; padding: 0; outline: none; }
+
+.wrap { display: -webkit-box; display: -ms-flexbox; display: flex; -webkit-box-orient: vertical; -webkit-box-direction: normal; -ms-flex-direction: column; flex-direction: column; -webkit-box-align: center; -ms-flex-align: center; align-items: center; }
+
+.wrap h1 { font-size: 18px; text-align: center; color: #111; background-color: #fff; height: 50px; position: fixed; width: 100%; display: -webkit-box; display: -ms-flexbox; display: flex; -webkit-box-pack: center; -ms-flex-pack: center; justify-content: center; -webkit-box-align: center; -ms-flex-align: center; align-items: center; top: 0; -webkit-box-shadow: 0 5px 5px rgba(0, 0, 0, 0.1); box-shadow: 0 5px 5px rgba(0, 0, 0, 0.1); overflow: hidden; text-shadow: 1px 1px 0px #b3b3b3,2px 2px 0px #b3b3b3,3px 3px 0px #b3b3b3,4px 4px 0px #b3b3b3,5px 5px 0px #b3b3b3,6px 6px 0px #b3b3b3,7px 7px 0px #b3b3b3,8px 8px 0px #b3b3b3,9px 9px 0px #b3b3b3,10px 10px 0px #b3b3b3,11px 11px 0px #b3b3b3,12px 12px 0px #b3b3b3,13px 13px 0px #b3b3b3,14px 14px 0px #b3b3b3,15px 15px 0px #b3b3b3,16px 16px 0px #b3b3b3,17px 17px 0px #b3b3b3,18px 18px 0px #b3b3b3,19px 19px 0px #b3b3b3,20px 20px 0px #b3b3b3,21px 21px 0px #b3b3b3,22px 22px 0px #b3b3b3,23px 23px 0px #b3b3b3,24px 24px 0px #b3b3b3,25px 25px 0px #b3b3b3,26px 26px 0px #b3b3b3,27px 27px 0px #b3b3b3,28px 28px 0px #b3b3b3,29px 29px 0px #b3b3b3,30px 30px 0px #b3b3b3;; }
+
+.wrap h1 strong { font-weight: 700; }
+
+.todo { text-align: center; background-color: #666; }
+
+.todo .day { font-size: 20px; padding: 15px 0; color: #fff; }
+
+.todo .date { font-size: 64px; padding: 30px 0; color: #fff; text-shadow: 1px 1px 0px #4d4d4d,2px 2px 0px #4d4d4d,3px 3px 0px #4d4d4d,4px 4px 0px #4d4d4d,5px 5px 0px #4d4d4d,6px 6px 0px #4d4d4d,7px 7px 0px #4d4d4d,8px 8px 0px #4d4d4d,9px 9px 0px #4d4d4d,10px 10px 0px #4d4d4d,11px 11px 0px #4d4d4d,12px 12px 0px #4d4d4d,13px 13px 0px #4d4d4d,14px 14px 0px #4d4d4d,15px 15px 0px #4d4d4d,16px 16px 0px #4d4d4d,17px 17px 0px #4d4d4d,18px 18px 0px #4d4d4d,19px 19px 0px #4d4d4d,20px 20px 0px #4d4d4d,21px 21px 0px #4d4d4d,22px 22px 0px #4d4d4d,23px 23px 0px #4d4d4d,24px 24px 0px #4d4d4d,25px 25px 0px #4d4d4d,26px 26px 0px #4d4d4d,27px 27px 0px #4d4d4d,28px 28px 0px #4d4d4d,29px 29px 0px #4d4d4d,30px 30px 0px #4d4d4d,31px 31px 0px #4d4d4d,32px 32px 0px #4d4d4d,33px 33px 0px #4d4d4d,34px 34px 0px #4d4d4d,35px 35px 0px #4d4d4d,36px 36px 0px #4d4d4d,37px 37px 0px #4d4d4d,38px 38px 0px #4d4d4d,39px 39px 0px #4d4d4d,40px 40px 0px #4d4d4d,41px 41px 0px #4d4d4d,42px 42px 0px #4d4d4d,43px 43px 0px #4d4d4d,44px 44px 0px #4d4d4d,45px 45px 0px #4d4d4d,46px 46px 0px #4d4d4d,47px 47px 0px #4d4d4d,48px 48px 0px #4d4d4d,49px 49px 0px #4d4d4d,50px 50px 0px #4d4d4d,51px 51px 0px #4d4d4d,52px 52px 0px #4d4d4d,53px 53px 0px #4d4d4d,54px 54px 0px #4d4d4d,55px 55px 0px #4d4d4d,56px 56px 0px #4d4d4d,57px 57px 0px #4d4d4d,58px 58px 0px #4d4d4d,59px 59px 0px #4d4d4d,60px 60px 0px #4d4d4d,61px 61px 0px #4d4d4d,62px 62px 0px #4d4d4d,63px 63px 0px #4d4d4d,64px 64px 0px #4d4d4d,65px 65px 0px #4d4d4d,66px 66px 0px #4d4d4d,67px 67px 0px #4d4d4d,68px 68px 0px #4d4d4d,69px 69px 0px #4d4d4d,70px 70px 0px #4d4d4d,71px 71px 0px #4d4d4d,72px 72px 0px #4d4d4d,73px 73px 0px #4d4d4d,74px 74px 0px #4d4d4d,75px 75px 0px #4d4d4d,76px 76px 0px #4d4d4d,77px 77px 0px #4d4d4d,78px 78px 0px #4d4d4d,79px 79px 0px #4d4d4d,80px 80px 0px #4d4d4d,81px 81px 0px #4d4d4d,82px 82px 0px #4d4d4d,83px 83px 0px #4d4d4d,84px 84px 0px #4d4d4d,85px 85px 0px #4d4d4d,86px 86px 0px #4d4d4d,87px 87px 0px #4d4d4d,88px 88px 0px #4d4d4d,89px 89px 0px #4d4d4d,90px 90px 0px #4d4d4d,91px 91px 0px #4d4d4d,92px 92px 0px #4d4d4d,93px 93px 0px #4d4d4d,94px 94px 0px #4d4d4d,95px 95px 0px #4d4d4d,96px 96px 0px #4d4d4d,97px 97px 0px #4d4d4d,98px 98px 0px #4d4d4d,99px 99px 0px #4d4d4d,100px 100px 0px #4d4d4d;; overflow: hidden; }
+
+.todo .inputBox { display: -webkit-box; display: -ms-flexbox; display: flex; padding: 10px; padding-top: 0; }
+
+.todo .inputBox #todoTxt { height: 40px; -webkit-box-sizing: border-box; box-sizing: border-box; width: calc(100% - 40px); }
+
+.todo .inputBox .btnAdd { width: 40px; height: 40px; background-color: #0390d1; color: #fff; }
+
+.todo .todoList { color: #fff; padding: 10px; font-size: 14px; }
+
+.todo .todoList li { display: -webkit-box; display: -ms-flexbox; display: flex; -webkit-box-pack: justify; -ms-flex-pack: justify; justify-content: space-between; -webkit-box-align: center; -ms-flex-align: center; align-items: center; padding-bottom: 5px; margin-bottom: 5px; border-bottom: 1px solid #fff; padding-left: 10px; position: relative; }
+
+.todo .todoList li.done:before { width: calc(100% - 30px); }
+
+.todo .todoList li:before { content: ""; display: block; width: 3px; height: 3px; background-color: #f00; border-radius: 100px; position: absolute; left: 0; top: 50%; pointer-events: none; -webkit-transform: translateY(-50%); transform: translateY(-50%); -webkit-transition: all 0.25s ease; transition: all 0.25s ease; }
+
+.todo .todoList li .btnDelete { color: #fff; }
+
+.calendar-box { z-index: 3;}
+
+.calendar-box .inputBox { background: #fff; border-radius: 10px; -webkit-box-sizing: border-box; box-sizing: border-box; padding: 10px 20px; margin-bottom: 10px; }
+
+.calendar-box .inputBox input { height: 20px; width: 100%; border: none; }
+
+.calendar-box .calendar { padding: 15px; background-color: #fff; -webkit-box-shadow: -5px 5px 5px rgba(0, 0, 0, 0.2); box-shadow: -5px 5px 5px rgba(0, 0, 0, 0.2); }
+
+.calendar-box .calendar .header { display: -webkit-box; display: -ms-flexbox; display: flex; -webkit-box-pack: justify; -ms-flex-pack: justify; justify-content: space-between; -webkit-box-align: center; -ms-flex-align: center; align-items: center; }
+
+.calendar-box .calendar .header button { background: none; outline: none; border: none; }
+
+.calendar-box .calendar .header .monthBox .month { font-weight: 700; }
+
+.calendar-box .calendar .days { margin-bottom: 10px; margin-top: 10px; }
+
+.calendar-box .calendar .days ul, .calendar-box .calendar .dates ul { display: -webkit-box; display: -ms-flexbox; display: flex; -ms-flex-wrap: wrap; flex-wrap: wrap; }
+
+.calendar-box .calendar .days ul li, .calendar-box .calendar .dates ul li { display: -webkit-box; display: -ms-flexbox; display: flex; -webkit-box-align: center; -ms-flex-align: center; align-items: center; -webkit-box-pack: center; -ms-flex-pack: center; justify-content: center; width: calc(100% / 7 - 4px); margin: 2px; position: relative; cursor: pointer; }
+
+.calendar-box .calendar .days ul li.on span, .calendar-box .calendar .dates ul li.on span { background-color: #111; }
+
+.calendar-box .calendar .days ul li.sun span, .calendar-box .calendar .dates ul li.sun span { background-color: #ec1111; }
+
+.calendar-box .calendar .days ul li.today span, .calendar-box .calendar .dates ul li.today span { background-color: #1194ec; font-weight: 700; text-shadow: 1px 1px 0px #0e76bc,2px 2px 0px #0e76bc,3px 3px 0px #0e76bc,4px 4px 0px #0e76bc,5px 5px 0px #0e76bc,6px 6px 0px #0e76bc,7px 7px 0px #0e76bc,8px 8px 0px #0e76bc,9px 9px 0px #0e76bc,10px 10px 0px #0e76bc,11px 11px 0px #0e76bc,12px 12px 0px #0e76bc,13px 13px 0px #0e76bc,14px 14px 0px #0e76bc,15px 15px 0px #0e76bc,16px 16px 0px #0e76bc,17px 17px 0px #0e76bc,18px 18px 0px #0e76bc,19px 19px 0px #0e76bc,20px 20px 0px #0e76bc,21px 21px 0px #0e76bc,22px 22px 0px #0e76bc,23px 23px 0px #0e76bc,24px 24px 0px #0e76bc,25px 25px 0px #0e76bc,26px 26px 0px #0e76bc,27px 27px 0px #0e76bc,28px 28px 0px #0e76bc,29px 29px 0px #0e76bc,30px 30px 0px #0e76bc;; }
+
+.calendar-box .calendar .days ul li.blank, .calendar-box .calendar .dates ul li.blank { visibility: hidden; opacity: 0; pointer-events: none; }
+
+.calendar-box .calendar .days ul li:before, .calendar-box .calendar .dates ul li:before { content: ""; display: block; padding-top: 100%; }
+
+.calendar-box .calendar .days ul li span, .calendar-box .calendar .dates ul li span { position: absolute; overflow: hidden; left: 0; top: 0; width: 100%; height: 100%; background-color: #666; -webkit-transition: 0.25s ease; transition: 0.25s ease; color: #fff; border-radius: 100%; display: -webkit-box; display: -ms-flexbox; display: flex; -webkit-box-align: center; -ms-flex-align: center; align-items: center; -webkit-box-pack: center; -ms-flex-pack: center; justify-content: center; font-size: 16px; }

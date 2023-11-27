@@ -1,0 +1,35 @@
+server:
+  port: 8093
+
+spring:
+  output:
+    ansi:
+      enabled: always
+  devtools:
+    livereload:
+      enabled: true
+    restart:
+      enabled: true
+
+
+  #### database ??
+  datasource:
+    driver-class-name: oracle.jdbc.driver.OracleDriver
+    url: jdbc:oracle:thin:@localhost:1521:xe
+    username: springryan
+    password: ryan
+
+#### mybatis ??
+mybatis:
+  config-location: classpath:mapper/config/config.xml
+  mapper-locations: classpath:mapper/sql/**/*.xml
+
+
+#### log ??  fatal > error > warn > info > debug
+logging:
+  level:
+    root: info
+    '[com.ryan9025.todo]': info
+
+file:
+  path: C:/upload/
