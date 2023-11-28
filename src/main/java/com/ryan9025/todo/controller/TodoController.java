@@ -1,6 +1,5 @@
 package com.ryan9025.todo.controller;
 
-import com.ryan9025.todo.dao.TodoDao;
 import com.ryan9025.todo.dto.TodoDto;
 import com.ryan9025.todo.service.TodoService;
 import lombok.RequiredArgsConstructor;
@@ -27,7 +26,6 @@ public class TodoController {
     @PostMapping("/insert")
     @ResponseBody
     public List<TodoDto> insertTodo(@ModelAttribute TodoDto todoDto) {
-        log.info("todoDto==={}",todoDto.toString());
         todoService.insertTodo(todoDto);
         List<TodoDto> todoList = todoService.getPickedDateTodo(todoDto);
         return todoList;
@@ -42,19 +40,17 @@ public class TodoController {
 
     @DeleteMapping("/delete")
     @ResponseBody
-    public Map<String,Integer> deleteTodo(@ModelAttribute TodoDto todoDto) {
-        int result = todoService.deleteTodo(todoDto);
-        Map<String,Integer> resultMap = new HashMap<>();
-        resultMap.put("isDelete",result);
-        return resultMap;
+    public List<TodoDto> deleteTodo(@ModelAttribute TodoDto todoDto) {
+        List<TodoDto> todoList = todoService.deleteTodo(todoDto);
+        /*Map<String,Integer> resultMap = new HashMap<>();
+        resultMap.put("isDelete",result);*/
+        return todoList;
     }
 
     @PutMapping("/update")
     @ResponseBody
-    public Map<String, Integer> updateTodo(@ModelAttribute TodoDto todoDto) {
-        int result = todoService.updateTodo(todoDto);
-        Map<String, Integer> resultMap = new HashMap<>();
-        resultMap.put("isUpdate",result);
-        return resultMap;
+    public List<TodoDto> updateTodo(@ModelAttribute TodoDto todoDto) {
+        List<TodoDto> todoList = todoService.updateTodo(todoDto);
+        return todoList;
     }
 }

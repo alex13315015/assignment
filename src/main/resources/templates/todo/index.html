@@ -65,7 +65,7 @@
 
     const now = new Date();  //2024/11/24
 
-    let queryDate = `${now.getFullYear()}-${now.getMonth()}-${now.getDate()}`
+    let queryDate = `${now.getFullYear()}-${now.getMonth() + 1}-${now.getDate()}`
 
     function makeCalendar(pickedYear, pickedMonth) {
         let output = "";
@@ -127,6 +127,10 @@
 
     let pickedNow = new Date();
 
+    const days = ["일","월","화","수","목","금","토"];
+    $("#pickedDay").text(days[now.getDay()]);
+    $("#pickedDate").text(now.getDate());
+
     $(".calendar .header .prev").on("click",function (){
         //자바스크립트는 월이 넘어가면 자동으로 년도는 바뀐다.        //console.log(now.getFullYear(),now.getMonth() + 2, 1)
 
@@ -140,17 +144,18 @@
         pickedNow = new Date(pickedNow.getFullYear(), pickedNow.getMonth() + 1);
         makeCalendar(pickedNow.getFullYear(), pickedNow.getMonth());
     });
-
+    // <Insert>
     //추가를 눌렀을 때, 데이터 전달
     $(".btnAdd").on("click",function() {
         console.log("추가됐다!!");
+
         $.ajax({
             url: "/todo/insert",
             method: "post",
             data: {
                 todo:$("#todoTxt").val(),
                 pickedDate: queryDate,
-                isDone:"미완료"
+                isDone:"yet"
             },
             success:function(result) {
                 console.log(result);
@@ -159,8 +164,8 @@
                 $(".todoList li").remove();
                 $.each(result,function(idx,item){
                     $(".todoList").append(
-                        `<li data-no="${item.no}" class="yet">
-                        <span>${item.todo}</span>
+                        `<li data-no="${item.no}" class="${item.isDone}" data-picked="${item.pickedDate}">
+                        <span class="txt">${item.todo}</span>
                         <button class="btnDelete">삭제</button>
                     </li>`
                     )
@@ -169,8 +174,8 @@
         })
     });
 
-    // 부모한테 Event위임!
-    $("body").on("click",".dates ul li",function() {
+    // <Select>
+    $("body").on("click",".dates ul li" ,function() {
         console.log("click");
         queryDate = $(this).data("picked");
         $(this).addClass("picked");
@@ -192,12 +197,12 @@
             $(".todoList li").remove();
             $.each(result,function (idx,item) {
                 $(".todoList").append(
-                    `<li data-no="${item.no}" class="yet">
+                    `<li data-no="${item.no}" class="${item.isDone}" data-picked="${item.pickedDate}">
                         <span class="txt">${item.todo}</span>
                         <button class="btnDelete">삭제</button>
                     </li>`
                 )
-            })
+            });
         }
     })
 
@@ -207,28 +212,39 @@
     //클릭이벤트를 하지 않아도 사람이 직접 누른것처럼 이벤트를 전파한다.
     $(".dates ul li.today").trigger("click");
 
+    //<Delete>
     $("body").on("click",".todoList li .btnDelete",function () {
         //이벤트 버블링, 캡처링..
         console.log("도달했다!");
+        const no = $(this).parent().data("no");
         const clickedItem = $(this).parent();
+        const queryDate = clickedItem.data("picked");
         $.ajax({
             url: "/todo/delete",
             method: "delete",
             data: {
-               no: $(this).parent().data("no")
+               no: $(this).parent().data("no"),
+                pickedDate:queryDate,
             },
             success: function (result) {
-                console.log(result);
-                if(result.isDelete === 1) {
-                    clickedItem.remove();
-                }
+                //서버에 있는 값이랑 안맞을수도 있음!
+                $(".todoList li").remove();
+                $.each(result,function (idx,item) {
+                    $(".todoList").append(
+                        `<li data-no="${item.no}" class="${item.isDone}" data-picked="${item.pickedDate}">
+                        <span class="txt">${item.todo}</span>
+                        <button class="btnDelete">삭제</button>
+                    </li>`
+                    )
+                });
             }
         })
     });
-
+    // <Update>
     $("body").on("click",".todoList li .txt",function () {
         const no = $(this).parent().data("no");
         const clickedItem = $(this).parent();
+        const queryDate = clickedItem.data("picked");
         let isState;
         if(clickedItem.hasClass("done")) {
                 isState = "yet";
@@ -240,20 +256,22 @@
             method:"put",
             data: {
                 no:no,
-                isDone:isState
+                isDone:isState,
+                pickedDate:queryDate,
             },
             success:function (result) {
-                console.log(result);
-                if(result.isUpdate === 1){
-                    if(clickedItem.hasClass("done")) {
-                        clickedItem.removeClass("done").addClass("yet");
-                    }else {
-                        clickedItem.removeClass("yet").addClass("done");
-                    }
-                }
+                $(".todoList li").remove();
+                $.each(result,function (idx,item) {
+                    $(".todoList").append(
+                        `<li data-no="${item.no}" class="${item.isDone}" data-picked="${item.pickedDate}">
+                        <span class="txt">${item.todo}</span>
+                        <button class="btnDelete">삭제</button>
+                    </li>`
+                    )
+                });
             }
         })
-    })
+    });
 
     /*queryDate =now.getFullYear() + "-" + (now.getMonth() + 1) + "-" + now.getDate();
     $.ajax({
