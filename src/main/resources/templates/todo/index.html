@@ -154,10 +154,12 @@
             },
             success:function(result) {
                 console.log(result);
+                $("#todoTxt").val("");
+                $("#todoTxt").focus();
                 $(".todoList li").remove();
                 $.each(result,function(idx,item){
                     $(".todoList").append(
-                        `<li data-no="1" class="yet">
+                        `<li data-no="${item.no}" class="yet">
                         <span>${item.todo}</span>
                         <button class="btnDelete">삭제</button>
                     </li>`
@@ -173,11 +175,106 @@
         queryDate = $(this).data("picked");
         $(this).addClass("picked");
         $(this).siblings().removeClass("picked");
-    });
+
     //처음 렌더링된것만 인식!!
     /*$(".dates ul li").on("click",function () {
         console.log("click");
     })*/
+
+    $.ajax({
+        url:"/todo/list",
+        method: "post",
+        data:{
+            pickedDate:queryDate,
+        },
+        success:function (result) {
+            console.log(result);
+            $(".todoList li").remove();
+            $.each(result,function (idx,item) {
+                $(".todoList").append(
+                    `<li data-no="${item.no}" class="yet">
+                        <span class="txt">${item.todo}</span>
+                        <button class="btnDelete">삭제</button>
+                    </li>`
+                )
+            })
+        }
+    })
+
+    });
+
+    //document.querySelector(".dates ul li.today").dispatchEvent("click"); --> 바닐라 스크립트!!
+    //클릭이벤트를 하지 않아도 사람이 직접 누른것처럼 이벤트를 전파한다.
+    $(".dates ul li.today").trigger("click");
+
+    $("body").on("click",".todoList li .btnDelete",function () {
+        //이벤트 버블링, 캡처링..
+        console.log("도달했다!");
+        const clickedItem = $(this).parent();
+        $.ajax({
+            url: "/todo/delete",
+            method: "delete",
+            data: {
+               no: $(this).parent().data("no")
+            },
+            success: function (result) {
+                console.log(result);
+                if(result.isDelete === 1) {
+                    clickedItem.remove();
+                }
+            }
+        })
+    });
+
+    $("body").on("click",".todoList li .txt",function () {
+        const no = $(this).parent().data("no");
+        const clickedItem = $(this).parent();
+        let isState;
+        if(clickedItem.hasClass("done")) {
+                isState = "yet";
+        }else {
+                isState = "done";
+        }
+        $.ajax({
+            url:"/todo/update",
+            method:"put",
+            data: {
+                no:no,
+                isDone:isState
+            },
+            success:function (result) {
+                console.log(result);
+                if(result.isUpdate === 1){
+                    if(clickedItem.hasClass("done")) {
+                        clickedItem.removeClass("done").addClass("yet");
+                    }else {
+                        clickedItem.removeClass("yet").addClass("done");
+                    }
+                }
+            }
+        })
+    })
+
+    /*queryDate =now.getFullYear() + "-" + (now.getMonth() + 1) + "-" + now.getDate();
+    $.ajax({
+        url: "/todo/list",
+        method: "post",
+        data: {
+            pickedDate: queryDate,
+        },
+        success: function (result) {
+            console.log(result);
+            $(".todoList li").remove();
+            $.each(result, function (idx, item) {
+                $(".todoList").append(
+                    `<li data-no="1" class="yet">
+                        <span>${item.todo}</span>
+                        <button class="btnDelete">삭제</button>
+                    </li>`
+                )
+            })
+        }
+    });*/
 
 </script>
 </body>

@@ -20,4 +20,14 @@ public class TodoService {
         List<TodoDto> todoList = todoDao.getPickedDateTodo(todoDto);
         return todoList;
     }
+
+    public int deleteTodo(TodoDto todoDto) {
+        int result = todoDao.deleteTodo(todoDto);
+        return result;
+    }
+
+    public int updateTodo(TodoDto todoDto) {
+        int result = todoDao.updateTodo(todoDto);
+        return result;
+    }
 }

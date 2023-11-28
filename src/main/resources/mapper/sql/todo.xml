@@ -15,4 +15,12 @@
     <select id="getPickedDateTodo" parameterType="TodoDto">
         select * from todo where pickedDate = #{pickedDate} order by no desc
     </select>
+
+    <delete id="deleteTodo" parameterType="TodoDto">
+        delete from todo where no = #{no}
+    </delete>
+
+    <update id="updateTodo" parameterType="TodoDto">
+        update todo set isDone = #{isDone} where no = #{no}
+    </update>
 </mapper>

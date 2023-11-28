@@ -11,4 +11,8 @@ public interface TodoDao {
 
     List<TodoDto> getPickedDateTodo(TodoDto todoDto);
 
+    int deleteTodo(TodoDto todoDto);
+
+    int updateTodo(TodoDto todoDto);
+
 }
