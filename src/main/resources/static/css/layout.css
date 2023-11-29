@@ -67,3 +67,16 @@ button { background: none; border: none; padding: 0; outline: none; }
 .calendar-box .calendar .days ul li.picked span {
     background-color: #111; color: #fff;
 }
+.calendar-box .calendar .dates ul li .count {
+    position: absolute;
+    top:0;
+    right: 0;
+    background-color: red;
+    color: #fff;
+    width: 15px;
+    height: 15px;
+    border-radius: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

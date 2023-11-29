@@ -4,6 +4,7 @@ import com.ryan9025.todo.dao.TodoDao;
 import com.ryan9025.todo.dto.TodoDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -21,17 +22,23 @@ public class TodoService {
         List<TodoDto> todoList = todoDao.getPickedDateTodo(todoDto);
         return todoList;
     }
-
+    @Transactional
     public List<TodoDto> deleteTodo(TodoDto todoDto) {
         int result = todoDao.deleteTodo(todoDto);
         List<TodoDto> todoList = todoDao.getPickedDateTodo(todoDto);
         return todoList;
         //return result;
     }
-
+    @Transactional
     public List<TodoDto> updateTodo(TodoDto todoDto) {
         int result = todoDao.updateTodo(todoDto);
         List<TodoDto> todoList = todoDao.getPickedDateTodo(todoDto);
         return todoList;
     }
+
+    public List<TodoDto> getDateCount() {
+        List<TodoDto> todoList = todoDao.getDateCount();
+        return todoList;
+    }
+
 }

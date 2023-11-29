@@ -7,9 +7,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+
 
 @Controller
 @Slf4j
@@ -18,7 +17,7 @@ import java.util.Map;
 public class TodoController {
     private final TodoService todoService;
 
-    @GetMapping({"/","/index"})
+    @GetMapping({"/", "/index"})
     public String index() {
         return "/todo/index";
     }
@@ -52,5 +51,12 @@ public class TodoController {
     public List<TodoDto> updateTodo(@ModelAttribute TodoDto todoDto) {
         List<TodoDto> todoList = todoService.updateTodo(todoDto);
         return todoList;
+    }
+
+    @GetMapping("/all")
+    @ResponseBody
+    public List<TodoDto> all(@ModelAttribute TodoDto todoDto) {
+        List<TodoDto> dateCountList = todoService.getDateCount();
+        return dateCountList;
     }
 }

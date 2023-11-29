@@ -5,5 +5,6 @@
 <configuration>
     <typeAliases>
         <typeAlias alias="TodoDto" type="com.ryan9025.todo.dto.TodoDto"/>
+        <typeAlias alias="CalendarDto" type="com.ryan9025.todo.dto.CalendarDto"/>
     </typeAliases>
 </configuration>
