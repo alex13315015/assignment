@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.js"></script>
+    <style>
+        #calendar {
+            width:800px;
+            margin: 50px auto;
+        }
+
+    </style>
+</head>
+<body>
+    <div id="calendar">
+
+
+    </div>
+    <script th:inline="javascript">
+            const calendarEl = document.querySelector("#calendar");
+            const calendar = new FullCalendar.Calendar(calendarEl, {
+                initialView: 'dayGridMonth',
+                timeZone: 'UTC',
+                local:"ko",
+                events: [[${todoList}]]
+
+                    /*[
+                        {
+                            id: 'a',
+                            title: 'my event',
+                            start: '2023-11-28',
+                            backgroundColor:"#ff0000",
+                            textColor:"#fff",
+                            borderColor:"#ff0000"
+                        },
+                        {
+                            id: 'b',
+                            title: 'my event',
+                            start: '2023-11-28'
+                        },
+                    ]*/
+            });
+            calendar.render();
+    </script>
+</body>
+</html>
