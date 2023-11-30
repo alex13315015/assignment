@@ -1,0 +1,51 @@
+server:
+  port: 8094
+
+spring:
+  output:
+    ansi:
+      enabled: always
+  devtools:
+    livereload:
+      enabled: true
+    restart:
+      enabled: true
+
+
+  #### database ??
+  datasource:
+    driver-class-name: oracle.jdbc.driver.OracleDriver
+    url: jdbc:oracle:thin:@localhost:1521:xe
+    username: springryan
+    password: ryan
+
+  jpa:
+    open-in-view: true
+    hibernate:
+      ddl-auto: update
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+
+    database: oracle
+    properties:
+      hibernate:
+        format_sql: true
+        show-sql: true
+        dialect: org.hibernate.dialect.Oracle12cDialect
+
+#### mybatis ??
+mybatis:
+  config-location: classpath:mapper/config/config.xml
+  mapper-locations: classpath:mapper/sql/**/*.xml
+
+
+#### log ??  fatal > error > warn > info > debug
+logging:
+  level:
+    root: info
+    '[com.ryan9025.jap]': info
+
+file:
+  path: C:/upload/
+
+
