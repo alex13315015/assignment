@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import lombok.*;
 
 @Getter
-@Setter
 @RequiredArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -18,13 +17,14 @@ public class Member02 {
 
     @Column(length = 30)
     private String userID;
-
+    @Column(length = 100)
     private String nickName;
 
     private String gender;
 
     private Integer age;
 
+    @Column(length = 100)
     private String email;
 
 
