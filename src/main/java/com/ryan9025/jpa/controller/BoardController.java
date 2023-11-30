@@ -2,9 +2,7 @@ package com.ryan9025.jpa.controller;
 
 
 import com.ryan9025.jpa.entity.Board02;
-import com.ryan9025.jpa.entity.Member02;
 import com.ryan9025.jpa.repository.BoardRepository;
-import com.ryan9025.jpa.repository.MemberRepository;
 import com.ryan9025.jpa.service.BoardService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -17,11 +15,10 @@ import java.util.List;
 @Controller
 @RequiredArgsConstructor
 @Slf4j
-public class TestController {
+public class BoardController {
 
     private final BoardRepository boardRepository;
     private final BoardService boardService;
-    private final MemberRepository memberRepository;
 
     @GetMapping("/")
     public String index() {
@@ -57,19 +54,4 @@ public class TestController {
         model.addAttribute("board",board);
         return "/view";
     }
-
-    /*@GetMapping("/member")
-    @ResponseBody
-    public String myPage() {
-        for(int i = 0; i < 100; i++) {
-            Member02 member02 = Member02.builder()
-                    .userID("hyuk9402")
-                    .name("손승혁")
-                    .age(30)
-                    .email("hyuk9402@naver.com")
-                    .build();
-            memberRepository.save(member02);
-        }
-        return "myPage";
-    }*/
 }

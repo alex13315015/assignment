@@ -16,9 +16,12 @@ public class Member02 {
     @Column(name = "memberId")
     private Integer id;
 
+    @Column(length = 30)
     private String userID;
 
-    private String name;
+    private String nickName;
+
+    private String gender;
 
     private Integer age;
 
