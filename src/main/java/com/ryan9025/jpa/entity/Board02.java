@@ -2,13 +2,11 @@ package com.ryan9025.jpa.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-
-@Getter
-@Setter
 @Entity
+@Getter
 @Builder
-@RequiredArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 //@Table(name = "myBoard")
 public class Board02 {
 

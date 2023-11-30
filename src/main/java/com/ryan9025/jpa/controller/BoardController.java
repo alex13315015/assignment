@@ -1,6 +1,7 @@
 package com.ryan9025.jpa.controller;
 
 
+import com.ryan9025.jpa.dto.BoardDto;
 import com.ryan9025.jpa.entity.Board02;
 import com.ryan9025.jpa.repository.BoardRepository;
 import com.ryan9025.jpa.service.BoardService;
@@ -27,24 +28,18 @@ public class BoardController {
 
     @GetMapping("/insert")
     public String insert() {
-        return "/insert";
+        return "/board/insert";
     }
-
     @PostMapping("/insert")
-    public String insertProcess(@ModelAttribute Board02 board02) {
-        Board02 dbInsertBoard = Board02.builder()
-                .subject(board02.getSubject())
-                .content(board02.getContent())
-                .build();
-        boardService.insertBoard(dbInsertBoard);
+    public String insertProcess(BoardDto boardDto) {
+        boardService.insertBoard(boardDto);
         return "redirect:/list";
     }
-
     @GetMapping("/list")
     public String list(Model model) {
-        List<Board02> boardList = boardService.getAllBoard();
+        List<BoardDto> boardList = boardService.getAllBoard();
         model.addAttribute("boardList",boardList);
-        return "/list";
+        return "/board/list";
     }
 
     @GetMapping("/view/{id}")
@@ -52,6 +47,6 @@ public class BoardController {
         log.info("id==={}",id);
         Board02 board = boardService.getBoard(id);
         model.addAttribute("board",board);
-        return "/view";
+        return "/board/view";
     }
 }

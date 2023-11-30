@@ -2,12 +2,11 @@ package com.ryan9025.jpa.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-
+@Entity
 @Getter
-@RequiredArgsConstructor
+@NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Entity
 public class Member02 {
 
     @Id
