@@ -13,3 +13,10 @@
 #viewModal .modal-content {
   white-space: pre-wrap;
 }
+.nav-link {
+  color: black;
+}
+.list {
+  color: black;
+  text-decoration: none;
+}
