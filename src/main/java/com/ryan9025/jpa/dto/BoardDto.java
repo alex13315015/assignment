@@ -26,6 +26,7 @@ public class BoardDto {
                 .subject(board02.getSubject())
                 .content(board02.getContent())
                 .createDate(board02.getCreateDate())
+                .comment02List(board02.getComment02List())
                 .build();
     }
 }
