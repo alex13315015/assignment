@@ -3,22 +3,31 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{/layout/layout}">
 <div layout:fragment="content" class="main">
-        <h1>VIEW</h1>
-            <div th:text="${board.subject}">
+    <div class="container">
+        <div class="row justify-content-center">
+            <h1>VIEW</h1>
+            <h4 th:text="${board.subject}"></h4>
+            <hr>
+            <div th:text="${board.content}" class="mt-5 mb-5"></div>
 
+            <div class="mt-5 mb-5">
+                <ul>
+                    <th:block th:each="comment : ${board.comment02List}">
+                        <li th:text="${comment.content}">여기에 댓글달림!!</li>
+                    </th:block>
+                </ul>
             </div>
-        <hr>
-        <div th:text="${board.content}">
 
+            <form action="" th:action="@{/comment/insert/{id}(id=${board.id})}" method="post" >
+                <div class="mb-3">
+                    <label for="content" class="form-label">댓글</label>
+                    <textarea type="text" class="form-control" name="content" id="content" rows="4"></textarea>
+                </div>
+                <div class="d-flex justify-content-center mt-5">
+                    <button class="btn btn-primary">댓글 등록</button>
+                </div>
+            </form>
         </div>
-        <form action="" th:action="@{/comment/insert/{id}(id=${board.id})}" method="post" >
-            <div class="mb-3">
-                <label for="content" class="form-label">내용</label>
-                <textarea class="form-control" name="content" id="content" rows="10"></textarea>
-            </div>
-            <div class="mt-5">
-                <button class="btn btn-primary" id="btnSubmit">댓글 등록</button>
-            </div>
-        </form>
+    </div>
 </div>
 </html>
