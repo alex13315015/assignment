@@ -10,12 +10,9 @@ import lombok.*;
 public class Member02 {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Column(name = "memberId")
-    private Integer id;
-
-    @Column(length = 30)
+    @Column(length = 30, unique = true)
     private String userID;
+
     @Column(length = 100)
     private String nickName;
 

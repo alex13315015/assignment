@@ -7,7 +7,8 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface MemberRepository extends JpaRepository<Member02,Integer> {
-
+public interface MemberRepository extends JpaRepository<Member02,String> {
     List<Member02> findByNickName(String NickName);
+    List<Member02> findByNickNameOrUserID(String NickName,String UserID);
+    //List<Member02> findByNickName(String NickName);
 }

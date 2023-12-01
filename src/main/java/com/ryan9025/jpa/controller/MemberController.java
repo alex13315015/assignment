@@ -7,10 +7,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
+import java.lang.reflect.Member;
 import java.util.List;
 
 @Controller
@@ -39,7 +38,28 @@ public class MemberController {
         return "/member/list";
     }
     @GetMapping("/myPage")
-    public String myPage() {
+    public String myPage(@RequestParam String id, Model model) {
+        MemberDto memberInfo = memberService.getMemberInfo(id);
+        model.addAttribute("memberInfo",memberInfo);
         return "/member/myPage";
+        }
+
+    @GetMapping("/modify")
+    public String modify(@RequestParam String id, Model model) {
+        MemberDto memberInfo = memberService.getMemberInfo(id);
+        model.addAttribute("memberInfo",memberInfo);
+        return "/member/modify";
+    }
+
+    @PostMapping("/modify")
+    public String modifyProcess(@ModelAttribute MemberDto memberDto, Model model) {
+        MemberDto memberInfo = memberService.modifyMember(memberDto);
+        return "redirect:/";
+    }
+
+    @GetMapping("/delete")
+    public String delete() {
+        return "/member/delete";
     }
 }
+

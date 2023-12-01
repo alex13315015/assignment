@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -36,5 +38,45 @@ public class MemberService {
             memberList.add(MemberDto.fromEntity(member02List.get(i)));
         }
         return memberList;
+        /*return memberRepository.findAll()
+                .stream()
+                .map(MemberDto::fromEntity)
+                .collect(Collectors.toList());*/
+        //반복문 돌려서 dto memberList에 담기...
+        //return memberList;
+    }
+
+    public MemberDto getMemberInfo(String id) {
+        Optional<Member02> memberEntity = memberRepository.findById(id);
+        if(memberEntity.isPresent()) {
+            MemberDto memberInfo = MemberDto.fromEntity(memberEntity.get());
+            return memberInfo;
+        }
+        return null;
+        //throw new NotFoundMember("해당 회원을 찾을 수 없습니다.");
+    }
+
+    public MemberDto modifyMember(MemberDto memberDto) {
+        Optional<Member02> memberEntity = memberRepository.findById(memberDto.getUserID());
+        if(memberEntity.isPresent()) {
+            Member02 updateMember = Member02.builder()
+                    .userID(memberDto.getUserID())
+                    .nickName(memberDto.getNickName())
+                    .gender(memberDto.getGender())
+                    .age(memberDto.getAge())
+                    .email(memberDto.getEmail())
+                    .build();
+            memberRepository.save(updateMember);
+        }
+        return null;
+    }
+
+    public boolean deleteMember(String id) {
+        Optional<Member02> memberEntity = memberRepository.findById(id);
+        if(memberEntity.isPresent()) {
+            memberRepository.delete(memberEntity.get());
+            return true;
+        }
+        return false;
     }
 }
