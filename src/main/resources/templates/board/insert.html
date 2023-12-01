@@ -1,18 +1,23 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-    <form action="/insert" name="" method="post">
-        <div>
-            <input type="text" name="subject">
-        </div>
-        <div>
-            <textarea name="content"></textarea>
-        </div>
-        <button>등록</button>
-    </form>
-</body>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/layout/layout}">
+<div layout:fragment="content" class="main">
+    <div class="container">
+        <h2>글쓰기</h2>
+        <form method="post" action="/board/insert">
+            <div class="mb-3">
+                <label for="subject" class="form-label">제목</label>
+                <input type="text" class="form-control" name="subject" id="subject" placeholder="제목을 입력해주세요.">
+            </div>
+            <div class="mb-3">
+                <label for="content" class="form-label">내용</label>
+                <textarea class="form-control" rows="10" name="content" id="content"></textarea>
+            </div>
+            <div class="mt-5">
+                <button class="btn btn-primary" id="btnSubmit">등록</button>
+            </div>
+        </form>
+    </div>
+</div>
 </html>

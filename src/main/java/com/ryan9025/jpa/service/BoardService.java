@@ -6,6 +6,7 @@ import com.ryan9025.jpa.repository.BoardRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -20,6 +21,7 @@ public class BoardService {
         Board02 dbInsertBoard = Board02.builder()
                 .subject(boardDto.getSubject())
                 .content(boardDto.getContent())
+                .createDate(LocalDateTime.now())
                 .build();
         Board02 responseBoard = boardRepository.save(dbInsertBoard);
         BoardDto responseBoardDto = BoardDto.fromEntity(responseBoard);
@@ -35,10 +37,10 @@ public class BoardService {
        return boardList;
     }
     // find메서드 사용시 Optional을 들고옴!
-    public Board02 getBoard(int id) {
+    public BoardDto getBoard(int id) {
         Optional<Board02> board = boardRepository.findById(id);
         if(board.isPresent()) {
-            return board.get();
+            return BoardDto.fromEntity(board.get());
         }
             return null;
             //throw new DataNotFoundException("찾는 id가 없음");

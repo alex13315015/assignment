@@ -16,6 +16,7 @@ import java.util.List;
 @Controller
 @RequiredArgsConstructor
 @Slf4j
+@RequestMapping("/board")
 public class BoardController {
 
     private final BoardRepository boardRepository;
@@ -33,7 +34,7 @@ public class BoardController {
     @PostMapping("/insert")
     public String insertProcess(BoardDto boardDto) {
         boardService.insertBoard(boardDto);
-        return "redirect:/list";
+        return "redirect:/board/list";
     }
     @GetMapping("/list")
     public String list(Model model) {
@@ -45,7 +46,7 @@ public class BoardController {
     @GetMapping("/view/{id}")
     public String view(@PathVariable int id, Model model) {
         log.info("id==={}",id);
-        Board02 board = boardService.getBoard(id);
+        BoardDto board = boardService.getBoard(id);
         model.addAttribute("board",board);
         return "/board/view";
     }

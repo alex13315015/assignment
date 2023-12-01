@@ -22,7 +22,7 @@ spring:
   jpa:
     open-in-view: true
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
       naming:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
 
@@ -33,17 +33,11 @@ spring:
         show-sql: true
         dialect: org.hibernate.dialect.Oracle12cDialect
 
-#### mybatis ??
-mybatis:
-  config-location: classpath:mapper/config/config.xml
-  mapper-locations: classpath:mapper/sql/**/*.xml
-
-
 #### log ??  fatal > error > warn > info > debug
 logging:
   level:
     root: info
-    '[com.ryan9025.jap]': info
+    '[com.ryan9025.jpa]': info
 
 file:
   path: C:/upload/

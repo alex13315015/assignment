@@ -1,11 +1,24 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-    <h1>VIEW</h1>
-        <div th:text="${board.subject}"></div>
-</body>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/layout/layout}">
+<div layout:fragment="content" class="main">
+        <h1>VIEW</h1>
+            <div th:text="${board.subject}">
+
+            </div>
+        <hr>
+        <div th:text="${board.content}">
+
+        </div>
+        <form action="" th:action="@{/comment/insert/{id}(id=${board.id})}" method="post" >
+            <div class="mb-3">
+                <label for="content" class="form-label">내용</label>
+                <textarea class="form-control" name="content" id="content" rows="10"></textarea>
+            </div>
+            <div class="mt-5">
+                <button class="btn btn-primary" id="btnSubmit">댓글 등록</button>
+            </div>
+        </form>
+</div>
 </html>
