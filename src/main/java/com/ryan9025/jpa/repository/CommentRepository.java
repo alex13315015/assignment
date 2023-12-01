@@ -1,0 +1,10 @@
+package com.ryan9025.jpa.repository;
+
+import com.ryan9025.jpa.entity.Comment02;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public interface CommentRepository extends JpaRepository<Comment02,Integer> {
+
+}
