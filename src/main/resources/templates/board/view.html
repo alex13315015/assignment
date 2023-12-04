@@ -5,15 +5,20 @@
 <div layout:fragment="content" class="main">
     <div class="container">
         <div class="row justify-content-center">
-            <h1>VIEW</h1>
+            <h2>VIEW</h2>
             <h4 th:text="${board.subject}"></h4>
             <hr>
             <div th:text="${board.content}" class="mt-5 mb-5"></div>
 
             <div class="mt-5 mb-5">
-                <ul>
+                <ul id="commentList">
                     <th:block th:each="comment : ${board.comment02List}">
-                        <li th:text="${comment.content}">여기에 댓글달림!!</li>
+                        <li class="comment">
+                            <div>
+                                <span th:text="${comment.content}">여기에 코멘트 달립니다.</span>
+                                <span class="badge bg-dark btn-del" th:data-idx="${comment.id}">삭제</span>
+                            </div>
+                            <span th:text="${#temporals.format(comment.createDate,'yyyy-MM-dd HH:mm:ss')}"></span>
                     </th:block>
                 </ul>
             </div>
@@ -24,10 +29,53 @@
                     <textarea type="text" class="form-control" name="content" id="content" rows="4"></textarea>
                 </div>
                 <div class="d-flex justify-content-center mt-5">
-                    <button class="btn btn-primary">댓글 등록</button>
+                    <button class="btn btn-dark" id="btnInsert">댓글 등록</button>
                 </div>
             </form>
         </div>
     </div>
+    <script th:inline="javascript">
+        $("body").on("click",".btn-del",function () {
+            const commentID = $(this).data("idx");
+            const commentItem = $(this).parent().parent();
+            console.log("btn-del");
+            $.ajax({
+                url:`/comment/delete/${commentID}`,
+                method:"delete",
+                success:function (result) {
+                    console.log(result);
+                    commentItem.fadeOut();
+                }
+            })
+        })
+
+        const boardID = [[${board.id}]];
+        const sendCommentUrl = "/comment/ajaxInsert/" + boardID;
+        $("#btnInsert").on("click",function (e) {
+            e.preventDefault();
+            $.ajax({
+                url:sendCommentUrl,
+                data:{
+                    content:$("#content").val()
+                },
+                method: "post",
+                success:function (result) {
+                    console.log(result);
+                    if(result.isInsert === "OK") {
+                        $("#commentList").append(
+                        `<li class="comment">
+                            <div>
+                                <span>${result.responseComment.content}</span>
+                                <span class="badge bg-dark btn-del" data-idx="${result.responseComment.id}">삭제</span>
+                            </div>
+                            <span class="date">${result.responseComment.strCreateDate}</span>
+                            </li>`
+                        );
+                    }
+                }
+            })
+            return false;
+        })
+    </script>
 </div>
 </html>

@@ -42,4 +42,7 @@ logging:
 file:
   path: C:/upload/
 
+pagination:
+  size: 5
+
 

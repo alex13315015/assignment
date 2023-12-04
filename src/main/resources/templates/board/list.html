@@ -18,10 +18,27 @@
                     <tr>
                         <th scope="row">1</th>
                         <td><a href="" th:href="@{/board/view/{idx}(idx=${item.id})}" th:text="${item.subject}" class="list"></a></td>
-                        <td th:text="${item.createDate}"></td>
+                        <td th:text="${#temporals.format(item.createDate,'yyyy-MM-dd')}"></td>
                     </tr>
                 </th:block>
             </tbody>
         </table>
+        <nav aria-label="Page navigation example">
+            <ul class="pagination justify-content-center mt-5" style="color: black">
+                <li class="page-item" th:classappend="${!pagination.hasPrevious()?'disabled':''}">
+                    <a class="page-link" th:href="@{/board/pageList(page=${pagination.number - 1})}">Previous</a>
+                </li>
+                <th:block th:each="item:${#numbers.sequence(0,pagination.totalPages - 1)}">
+                    <li class="page-item"
+                        th:classappend="${item == pagination.number?'active':''}"
+                        th:if="${item >= start and item < end}">
+                            <a class="page-link" href="#" th:text="${item + 1}" th:href="@{/board/pageList(page=${item})}">1</a>
+                    </li>
+                </th:block>
+                <li class="page-item" th:class="${!pagination.hasNext()?'disabled':''}">
+                    <a class="page-link" href="#" th:href="@{/board/pageList(page=${pagination.number + 1})}">다음</a>
+                </li>
+            </ul>
+        </nav>
     </div>
 </html>

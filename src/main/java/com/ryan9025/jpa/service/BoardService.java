@@ -4,6 +4,9 @@ import com.ryan9025.jpa.dto.BoardDto;
 import com.ryan9025.jpa.entity.Board02;
 import com.ryan9025.jpa.repository.BoardRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -44,5 +47,15 @@ public class BoardService {
         }
             return null;
             //throw new DataNotFoundException("찾는 id가 없음");
+    }
+
+    public Page<Board02> getAllPageBoard(int page) {
+        Pageable pageable = PageRequest.of(page,10);
+        Page<Board02> board02List = boardRepository.findAll(pageable);
+        /*List<BoardDto> boardList = new ArrayList<>();
+        for(int i = 0; i < board02List.size(); i++) {
+            boardList.add(BoardDto.fromEntity(board02List.get(i)));
+        }*/
+        return board02List;
     }
 }
