@@ -17,7 +17,6 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping("/member")
 public class MemberController {
-    private MemberRepository memberRepository;
     private final MemberService memberService;
 
     @GetMapping("/join")
@@ -30,6 +29,11 @@ public class MemberController {
         memberService.joinMember(memberDto);
         //}
         return "redirect:/";
+    }
+    @GetMapping("/login")
+    public String login(MemberDto memberDto, Model model) {
+        model.addAttribute("memberDto",new MemberDto());
+        return "/member/login";
     }
     @GetMapping("/list")
     public String list(Model model) {

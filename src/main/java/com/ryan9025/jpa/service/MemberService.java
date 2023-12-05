@@ -20,7 +20,6 @@ public class MemberService {
         Member02 dbJoinMember = Member02.builder()
                 .userID(memberDto.getUserID())
                 .nickName(memberDto.getNickName())
-                .gender(memberDto.getGender())
                 .age(memberDto.getAge())
                 .email(memberDto.getEmail())
                 .build();
@@ -62,7 +61,6 @@ public class MemberService {
             Member02 updateMember = Member02.builder()
                     .userID(memberDto.getUserID())
                     .nickName(memberDto.getNickName())
-                    .gender(memberDto.getGender())
                     .age(memberDto.getAge())
                     .email(memberDto.getEmail())
                     .build();

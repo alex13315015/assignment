@@ -7,16 +7,24 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@Table(name = "memberManager")
 public class Member02 {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    private Integer id;
+
     @Column(length = 30, unique = true)
     private String userID;
 
+    @Column(length = 100, nullable = true)
+    private String password;
+
+    @Column(length = 20, nullable = true)
+    private String role;
+
     @Column(length = 100)
     private String nickName;
-
-    private String gender;
 
     private Integer age;
 
