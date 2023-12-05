@@ -1,5 +1,6 @@
 package com.ryan9025.jpa.service;
 
+import com.ryan9025.jpa.dto.CustomUserDetails;
 import com.ryan9025.jpa.entity.Member02;
 import com.ryan9025.jpa.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
@@ -20,8 +21,8 @@ public class CustomUserDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String userID) throws UsernameNotFoundException {
         Optional<Member02> loggedMember = memberRepository.findByUserID(userID);
         if(loggedMember.isPresent()) {
-
+            return new CustomUserDetails(loggedMember.get());
         }
-        return null;
+        throw new UsernameNotFoundException("아이디와 패스워드를 확인해주세요.");
     }
 }

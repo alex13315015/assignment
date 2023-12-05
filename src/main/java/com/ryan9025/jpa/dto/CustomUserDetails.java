@@ -1,6 +1,7 @@
 package com.ryan9025.jpa.dto;
 
 import com.ryan9025.jpa.entity.Member02;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.GrantedAuthority;
@@ -10,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 @Slf4j
 @RequiredArgsConstructor
+@Getter
 public class CustomUserDetails implements UserDetails {
     private final Member02 loggedMember;
     @Override
@@ -36,21 +38,23 @@ public class CustomUserDetails implements UserDetails {
 
     @Override
     public boolean isAccountNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isEnabled() {
-        return false;
+        return true;
     }
+
+
 }

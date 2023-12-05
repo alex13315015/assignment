@@ -29,6 +29,11 @@ public class Comment02 {
     private LocalDateTime createDate;
 
     @ManyToOne
+    @JoinColumn(name = "boardID")
     private Board02 board02;
+
+    @ManyToOne
+    @JoinColumn(name = "writer")
+    private Member02 writer;
 
 }

@@ -2,11 +2,13 @@ package com.ryan9025.jpa.controller;
 
 import com.ryan9025.jpa.dto.BoardDto;
 import com.ryan9025.jpa.dto.CommentDto;
+import com.ryan9025.jpa.dto.CustomUserDetails;
 import com.ryan9025.jpa.entity.Board02;
 import com.ryan9025.jpa.entity.Comment02;
 import com.ryan9025.jpa.service.BoardService;
 import com.ryan9025.jpa.service.CommentService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,14 +25,7 @@ public class CommentController {
 
     @PostMapping("/insert/{id}")
     public String insert(@PathVariable("id") int id, @RequestParam String content) {
-        BoardDto boardDto = boardService.getBoard(id);
-        Board02 board02 = Board02.builder()
-                .id(boardDto.getId())
-                .subject(boardDto.getSubject())
-                .content(boardDto.getContent())
-                .createDate(boardDto.getCreateDate())
-                .comment02List(boardDto.getComment02List())
-                .build();
+        Board02 board02 = boardService.getBoard(id);
         commentService.insertComment(board02,content);
         return "redirect:/board/view/" + id;
     }
@@ -46,18 +41,16 @@ public class CommentController {
 
     @PostMapping("/ajaxInsert/{id}")
     @ResponseBody
-    public Map<String,Object> ajaxInsert(@PathVariable("id") int id, @RequestParam String content) {
-        BoardDto boardDto = boardService.getBoard(id);
-        Board02 board02 = Board02.builder()
-                .id(boardDto.getId())
-                .subject(boardDto.getSubject())
-                .content(boardDto.getContent())
-                .createDate(boardDto.getCreateDate())
-                .comment02List(boardDto.getComment02List())
-                .build();
-
+    public Map<String,Object> ajaxInsert(
+            @PathVariable("id") int id,
+            @RequestParam String content,
+            @AuthenticationPrincipal CustomUserDetails customUserDetails) {
+        Board02 board02 = boardService.getBoard(id);
         //save된 entity를 리턴받을 수 있다.
-        Comment02 comment02 = commentService.ajaxInsertComment(board02,content);
+        Comment02 comment02 = commentService.ajaxInsertComment(
+                board02,
+                content,
+                customUserDetails.getLoggedMember());
         //데이터를 전달하기 위해 dto로 변환해서
         CommentDto responseComment = CommentDto.fromEntity(comment02);
 

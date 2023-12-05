@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -20,42 +21,47 @@ import java.util.Optional;
 public class BoardService {
     private final BoardRepository boardRepository;
 
-    public BoardDto insertBoard(BoardDto boardDto) {
-        Board02 dbInsertBoard = Board02.builder()
-                .subject(boardDto.getSubject())
-                .content(boardDto.getContent())
-                .createDate(LocalDateTime.now())
-                .build();
-        Board02 responseBoard = boardRepository.save(dbInsertBoard);
-        BoardDto responseBoardDto = BoardDto.fromEntity(responseBoard);
-        return responseBoardDto;
+    public BoardDto insertBoard(Board02 board02) {
+        Board02 board = boardRepository.save(board02);
+        return BoardDto.fromEntity(board);
     }
 
-    public List<BoardDto> getAllBoard() {
-       List<Board02> board02List = boardRepository.findAll();
-       List<BoardDto> boardList = new ArrayList<>();
-       for(int i = 0; i < board02List.size(); i++) {
-           boardList.add(BoardDto.fromEntity(board02List.get(i)));
-       }
+    public List<Board02> getAllBoard() {
+       List<Board02> boardList = boardRepository.findAll();
        return boardList;
     }
     // find메서드 사용시 Optional을 들고옴!
-    public BoardDto getBoard(int id) {
+    public Board02 getBoard(int id) {
         Optional<Board02> board = boardRepository.findById(id);
         if(board.isPresent()) {
-            return BoardDto.fromEntity(board.get());
+            return board.get();
         }
-            return null;
             //throw new DataNotFoundException("찾는 id가 없음");
+        return null;
     }
-
     public Page<Board02> getAllPageBoard(int page) {
-        Pageable pageable = PageRequest.of(page,10);
+        Pageable pageable = PageRequest.of(page,10,
+                Sort.by(Sort.Direction.DESC,"createDate"));
         Page<Board02> board02List = boardRepository.findAll(pageable);
         /*List<BoardDto> boardList = new ArrayList<>();
         for(int i = 0; i < board02List.size(); i++) {
             boardList.add(BoardDto.fromEntity(board02List.get(i)));
         }*/
         return board02List;
+    }
+    public Page<Board02> getSearchBoard(String category, String keyword, int page) {
+        Pageable pageable = PageRequest.of(page,10);
+        if(category.equals("subject")) {
+            Page<Board02> boardList = boardRepository.findBySubject(keyword,pageable);
+            return boardList;
+        } else if(category.equals("content")) {
+            Page<Board02> boardList = boardRepository.findByContent(keyword,pageable);
+            return boardList;
+        } else if(category.equals("writer")) {
+            Page<Board02> boardList = boardRepository.findByWriter(keyword,pageable);
+            return boardList;
+        }
+        throw new RuntimeException("검색 결과가 없습니다.");
+
     }
 }

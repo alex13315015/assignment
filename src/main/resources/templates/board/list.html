@@ -6,25 +6,34 @@
 <div layout:fragment="content" class="main">
     <div class="container">
         <table class="table">
+            <colgroup>
+                <col style="width: 20px">
+                <col>
+                <col style="width: 100px">
+                <col style="width: 150px">
+            </colgroup>
             <thead>
                 <tr>
                     <th scope="col">번호</th>
-                    <th scope="col">제목</th>
+                    <th scope="col" class="d-flex justify-content-center">제목</th>
+                    <th scope="col">작성자</th>
                     <th scope="col">날짜</th>
                 </tr>
             </thead>
             <tbody>
-                <th:block th:each="item:${boardList}">
+                <th:block th:each="item,status:${boardList}">
                     <tr>
-                        <th scope="row">1</th>
-                        <td><a href="" th:href="@{/board/view/{idx}(idx=${item.id})}" th:text="${item.subject}" class="list"></a></td>
-                        <td th:text="${#temporals.format(item.createDate,'yyyy-MM-dd')}"></td>
+                        <th scope="row" th:text="${pagination.totalElements - pagination.number*pagination.size - status.index}">1</th>
+                        <td><a href="" th:href="@{/board/view/{idx}(idx=${item.id})}" th:text="${item.subject}" ></a></td>
+                        <td><span th:text="${item.writer.nickName}"></span></td>
+                        <td th:text="${#temporals.format(item.createDate,'yyyy/MM/dd HH:mm')}"></td>
                     </tr>
                 </th:block>
             </tbody>
         </table>
+
         <nav aria-label="Page navigation example">
-            <ul class="pagination justify-content-center mt-5" style="color: black">
+            <ul class="pagination justify-content-center mt-5">
                 <li class="page-item" th:classappend="${!pagination.hasPrevious()?'disabled':''}">
                     <a class="page-link" th:href="@{/board/pageList(page=${pagination.number - 1})}">Previous</a>
                 </li>
@@ -40,5 +49,29 @@
                 </li>
             </ul>
         </nav>
+            <div class="container mt-5">
+                <form action="" th:action="@{/board/search}" method="get">
+                    <div class="row">
+                        <div class="col-4" th:with="category=${param.category}">
+                            <select class="form-select" aria-label="Default select example" name="category">
+                                <option value="all"     th:selected="${#strings.equals(category,'all')    ? true : false}">전체검색</option>
+                                <option value="subject"   th:selected="${#strings.equals(category,'subject')  ? true : false}">제목</option>
+                                <option value="content" th:selected="${#strings.equals(category,'content')? true : false}">내용</option>
+                                <option value="writer"    th:selected="${#strings.equals(category,'writer')   ? true : false}">글쓴이</option>
+                            </select>
+                        </div>
+                        <div class="col-6">
+                            <input  type="text" class="form-control" name="keyword" placeholder="검색어를 입력해주세요."
+                                    th:value="${param.keyword}">
+                        </div>
+                        <div class="col-2"><button class="btn btn-primary">검색</button></div>
+                    </div>
+                </form>
+            </div>
+
+        <div class="mt-5 d-flex justify-content-center">
+            <a href="/board/insert" class="btn btn-dark">글쓰기</a>
+        </div>
     </div>
+</div>
 </html>

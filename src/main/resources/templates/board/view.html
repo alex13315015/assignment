@@ -5,23 +5,34 @@
 <div layout:fragment="content" class="main">
     <div class="container">
         <div class="row justify-content-center">
-            <h2>VIEW</h2>
-            <h4 th:text="${board.subject}"></h4>
-            <hr>
-            <div th:text="${board.content}" class="mt-5 mb-5"></div>
+            <div class="col-md-10"></div>
+                <h2>VIEW</h2>
+                <h4 th:text="${board.subject}"></h4>
+                <hr>
+                <div class="mt-5 mb-5 d-flex justify-content-between">
+                    <div th:text="${board.content}">
+                    </div>
+                    <div class="writerInfo">
+                        <span th:text="${board.writer.nickName}"></span>
+                        <span th:text="${#temporals.format(board.createDate,'yyyy-MM-dd HH:mm:ss')}"></span>
+                    </div>
+                </div>
+                    <div class="mt-5 mb-5">
+                        <ul id="commentList">
+                            <th:block th:each="comment : ${board.comment02List}">
+                                <li class="comment">
+                                    <div>
+                                        <span th:text="${comment.content}">여기에 코멘트 달립니다.</span>
+                                        <span class="badge bg-dark btn-del" th:data-idx="${comment.id}">삭제</span>
+                                    </div>
+                                    <div>
+                                        <span class="writer" th:text="writer"></span>
+                                        <span th:text="${#temporals.format(comment.createDate,'yyyy-MM-dd HH:mm:ss')}"></span>
+                                    </div>
+                            </th:block>
+                        </ul>
+                    </div>
 
-            <div class="mt-5 mb-5">
-                <ul id="commentList">
-                    <th:block th:each="comment : ${board.comment02List}">
-                        <li class="comment">
-                            <div>
-                                <span th:text="${comment.content}">여기에 코멘트 달립니다.</span>
-                                <span class="badge bg-dark btn-del" th:data-idx="${comment.id}">삭제</span>
-                            </div>
-                            <span th:text="${#temporals.format(comment.createDate,'yyyy-MM-dd HH:mm:ss')}"></span>
-                    </th:block>
-                </ul>
-            </div>
 
             <form action="" th:action="@{/comment/insert/{id}(id=${board.id})}" method="post" >
                 <div class="mb-3">
@@ -34,6 +45,7 @@
             </form>
         </div>
     </div>
+</div>
     <script th:inline="javascript">
         $("body").on("click",".btn-del",function () {
             const commentID = $(this).data("idx");

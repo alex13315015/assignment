@@ -14,11 +14,12 @@ import java.util.List;
 @Builder
 @ToString
 public class BoardDto {
-    private int id;
+    private Integer id;
     private String subject;
     private String content;
     private LocalDateTime createDate;
     private List<Comment02> comment02List;
+
 
     public static BoardDto fromEntity(Board02 board02) {
         return BoardDto.builder()

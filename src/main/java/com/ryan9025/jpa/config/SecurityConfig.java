@@ -19,7 +19,7 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.authorizeHttpRequests((auth) -> auth
-                .requestMatchers("/member/join","/member/login","/css/**","/js/**","/images/**")
+                .requestMatchers("/board/pageList","/member/join","/member/login","/css/**","/js/**","/images/**","/")
                 .permitAll()
                 .anyRequest()
                 .authenticated())
@@ -27,12 +27,12 @@ public class SecurityConfig {
                         .loginPage("/member/login")
                         .usernameParameter("userID")
                         .loginProcessingUrl("/member/login")
-                        .defaultSuccessUrl("/board/pageList")
+                        .defaultSuccessUrl("/board/pageList",true)
                         .permitAll()
                 )
                 .logout((auth) -> auth
                         .logoutRequestMatcher(new AntPathRequestMatcher("/member/logout"))
-                        .logoutSuccessUrl("/")
+                        .logoutSuccessUrl("/member/login")
                         .invalidateHttpSession(true)
         )
                 .csrf((auth) -> auth.disable());

@@ -16,17 +16,20 @@ public class Board02 {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Column(name = "boardId")
     private Integer id;
 
     private String subject;
 
-    @Column(length = 2000)
+    @Column(columnDefinition = "varchar2(1500)" )
     private String content;
+
+    private LocalDateTime createDate;
 
     @OneToMany(mappedBy = "board02", cascade = CascadeType.REMOVE)
     private List<Comment02> comment02List;
 
-    private LocalDateTime createDate;
+    @ManyToOne
+    @JoinColumn(name = "writer")
+    private Member02 writer;
 
 }
