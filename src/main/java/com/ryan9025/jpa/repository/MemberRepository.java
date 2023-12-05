@@ -12,6 +12,5 @@ public interface MemberRepository extends JpaRepository<Member02,String> {
     List<Member02> findByNickName(String NickName);
     List<Member02> findByNickNameOrUserID(String NickName,String UserID);
     List<Member02> findByAgeGreaterThanOrderByAgeDesc(int age);
-
     Optional<Member02> findByUserID(String UserID);
 }

@@ -20,9 +20,6 @@ public class Member02 {
     @Column(length = 100, nullable = true)
     private String password;
 
-    @Column(length = 20, nullable = true)
-    private String role;
-
     @Column(length = 100)
     private String nickName;
 
@@ -30,6 +27,9 @@ public class Member02 {
 
     @Column(length = 100)
     private String email;
+
+    @Column(length = 20, nullable = true)
+    private String role;
 
 
 }

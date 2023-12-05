@@ -4,6 +4,7 @@ import com.ryan9025.jpa.dto.MemberDto;
 import com.ryan9025.jpa.entity.Member02;
 import com.ryan9025.jpa.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -15,13 +16,16 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class MemberService {
     private final MemberRepository memberRepository;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     public MemberDto joinMember(MemberDto memberDto) {
         Member02 dbJoinMember = Member02.builder()
                 .userID(memberDto.getUserID())
+                .password(bCryptPasswordEncoder.encode(memberDto.getPassword()))
                 .nickName(memberDto.getNickName())
                 .age(memberDto.getAge())
                 .email(memberDto.getEmail())
+                .role("ROLE_USER")
                 .build();
         Member02 responseMember = memberRepository.save(dbJoinMember);
         MemberDto responseMemberDto = MemberDto.fromEntity(responseMember);
@@ -45,8 +49,8 @@ public class MemberService {
         //return memberList;
     }
 
-    public MemberDto getMemberInfo(String id) {
-        Optional<Member02> memberEntity = memberRepository.findById(id);
+    public MemberDto getMemberInfo(String userID) {
+        Optional<Member02> memberEntity = memberRepository.findByUserID(userID);
         if(memberEntity.isPresent()) {
             MemberDto memberInfo = MemberDto.fromEntity(memberEntity.get());
             return memberInfo;
@@ -60,6 +64,7 @@ public class MemberService {
         if(memberEntity.isPresent()) {
             Member02 updateMember = Member02.builder()
                     .userID(memberDto.getUserID())
+                    .password(bCryptPasswordEncoder.encode(memberDto.getPassword()))
                     .nickName(memberDto.getNickName())
                     .age(memberDto.getAge())
                     .email(memberDto.getEmail())
@@ -69,8 +74,8 @@ public class MemberService {
         return null;
     }
 
-    public boolean deleteMember(String id) {
-        Optional<Member02> memberEntity = memberRepository.findById(id);
+    public boolean deleteMember(String userID) {
+        Optional<Member02> memberEntity = memberRepository.findByUserID(userID);
         if(memberEntity.isPresent()) {
             memberRepository.delete(memberEntity.get());
             return true;

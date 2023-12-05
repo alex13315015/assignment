@@ -1,15 +1,14 @@
 package com.ryan9025.jpa.controller;
 
 import com.ryan9025.jpa.dto.MemberDto;
-import com.ryan9025.jpa.repository.MemberRepository;
 import com.ryan9025.jpa.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import java.lang.reflect.Member;
 import java.util.List;
 
 @Controller
@@ -42,15 +41,15 @@ public class MemberController {
         return "/member/list";
     }
     @GetMapping("/myPage")
-    public String myPage(@RequestParam String id, Model model) {
-        MemberDto memberInfo = memberService.getMemberInfo(id);
+    public String myPage(@RequestParam String userID, Model model) {
+        MemberDto memberInfo = memberService.getMemberInfo(userID);
         model.addAttribute("memberInfo",memberInfo);
         return "/member/myPage";
         }
 
     @GetMapping("/modify")
-    public String modify(@RequestParam String id, Model model) {
-        MemberDto memberInfo = memberService.getMemberInfo(id);
+    public String modify(@RequestParam String userID, Model model) {
+        MemberDto memberInfo = memberService.getMemberInfo(userID);
         model.addAttribute("memberInfo",memberInfo);
         return "/member/modify";
     }
