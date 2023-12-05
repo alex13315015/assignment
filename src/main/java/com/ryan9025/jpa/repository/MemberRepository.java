@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface MemberRepository extends JpaRepository<Member02,String> {
+public interface MemberRepository extends JpaRepository<Member02,Integer> {
     List<Member02> findByNickName(String NickName);
     List<Member02> findByNickNameOrUserID(String NickName,String UserID);
     List<Member02> findByAgeGreaterThanOrderByAgeDesc(int age);

@@ -16,6 +16,7 @@ public class MemberDto {
     private String nickName;
     private int age;
     private String email;
+    private String role;
 
     public static MemberDto fromEntity(Member02 member02) {
         return MemberDto.builder()
@@ -25,6 +26,7 @@ public class MemberDto {
                 .nickName(member02.getNickName())
                 .age(member02.getAge())
                 .email(member02.getEmail())
+                .role(member02.getRole())
                 .build();
     }
 }

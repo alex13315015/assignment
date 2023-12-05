@@ -16,10 +16,10 @@
         <div sec:authorize="isAuthenticated()">
             <ul class="nav nav-pills">
                 <li class="nav-item"><a href="/static" th:href="@{/}" class="nav-link" aria-current="page"><i class="bi bi-house" style="font-size: 1.5rem;"></i>Home</a></li>
-                <li class="nav-item"><a href="/board/list.html" th:href="@{/board/pageList}" class="nav-link"><i class="bi bi-clipboard" style="font-size: 1.5rem;"></i>Board</a></li>
-                <li class="nav-item"><a href="/board/list.html" th:href="@{/board/insert}" class="nav-link"><i class="bi bi-pencil-square" style="font-size: 1.5rem;"></i>Write</a></li>
-                <li class="nav-item"><a href="/board/list.html" th:href="@{/member/myPage}" class="nav-link" th:text="${#authentication.principal.loggedMember.nickName}"></a></li>
-                <li class="nav-item"><a href="/board/list.html" th:href="@{/member/logout}" class="nav-link"><i class="bi bi-person-lines-fill" style="font-size: 1.5rem;"></i>Logout</a></li>
+                <li class="nav-item"><a href="#" th:href="@{/board/pageList}" class="nav-link"><i class="bi bi-clipboard" style="font-size: 1.5rem;"></i>Board</a></li>
+                <li class="nav-item"><a href="#" th:href="@{/board/insert}" class="nav-link"><i class="bi bi-pencil-square" style="font-size: 1.5rem;"></i>Write</a></li>
+                <li class="nav-item"><a href="#" th:href="@{/member/myPage(userID=${#authentication.principal.loggedMember.userID})}" class="nav-link" th:text="${#authentication.principal.loggedMember.nickName}"></a></li>
+                <li class="nav-item"><a href="#" th:href="@{/member/logout}" class="nav-link"><i class="bi bi-person-lines-fill" style="font-size: 1.5rem;"></i>Logout</a></li>
             </ul>
         </div>
     </header>

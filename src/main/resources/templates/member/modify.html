@@ -12,17 +12,13 @@
                 <th scope="row">아이디</th>
                 <td th:text="${memberInfo.userID}"></td>
                 <input type="hidden" name="userID" th:value="${memberInfo.userID}">
+                <input type="hidden" name="id" th:value="${memberInfo.id}">
+
             </tr>
             <tr>
                 <th scope="row">닉네임</th>
                 <td>
                     <input th:type="text" name="nickName" th:value="${memberInfo.nickName}">
-                </td>
-            </tr>
-            <tr>
-                <th scope="row">성별</th>
-                <td>
-                    <input th:type="text" name="gender" th:value="${memberInfo.gender}">
                 </td>
             </tr>
             <tr>
@@ -44,7 +40,6 @@
             </div>
         </form>
     </div>
-
 </div>
 
 </html>

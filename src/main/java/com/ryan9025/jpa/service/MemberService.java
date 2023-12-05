@@ -4,8 +4,10 @@ import com.ryan9025.jpa.dto.MemberDto;
 import com.ryan9025.jpa.entity.Member02;
 import com.ryan9025.jpa.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,6 +16,7 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class MemberService {
     private final MemberRepository memberRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -53,22 +56,23 @@ public class MemberService {
         Optional<Member02> memberEntity = memberRepository.findByUserID(userID);
         if(memberEntity.isPresent()) {
             MemberDto memberInfo = MemberDto.fromEntity(memberEntity.get());
+            log.info("memberInfo === " + memberInfo.toString());
             return memberInfo;
         }
         return null;
         //throw new NotFoundMember("해당 회원을 찾을 수 없습니다.");
     }
-
+    @Transactional
     public MemberDto modifyMember(MemberDto memberDto) {
-        Optional<Member02> memberEntity = memberRepository.findById(memberDto.getUserID());
+        log.info("getUserID==="+memberDto.getUserID());
+        Optional<Member02> memberEntity = memberRepository.findByUserID(memberDto.getUserID());
         if(memberEntity.isPresent()) {
             Member02 updateMember = Member02.builder()
-                    .userID(memberDto.getUserID())
-                    .password(bCryptPasswordEncoder.encode(memberDto.getPassword()))
                     .nickName(memberDto.getNickName())
                     .age(memberDto.getAge())
                     .email(memberDto.getEmail())
                     .build();
+            log.info("updateMember ==== " + updateMember.toString());
             memberRepository.save(updateMember);
         }
         return null;
