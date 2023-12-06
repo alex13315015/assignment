@@ -20,7 +20,7 @@ public class Board02 {
 
     private String subject;
 
-    @Column(columnDefinition = "varchar2(1500)" )
+    @Lob
     private String content;
 
     private LocalDateTime createDate;

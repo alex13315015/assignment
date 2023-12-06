@@ -13,8 +13,8 @@
                 <col style="width: 150px">
             </colgroup>
             <thead>
-                <tr>
-                    <th scope="col">번호</th>
+                <tr >
+                    <th scope="col" >번호</th>
                     <th scope="col" class="d-flex justify-content-center">제목</th>
                     <th scope="col">작성자</th>
                     <th scope="col">날짜</th>
@@ -23,8 +23,13 @@
             <tbody>
                 <th:block th:each="item,status:${boardList}">
                     <tr>
-                        <th scope="row" th:text="${pagination.totalElements - pagination.number*pagination.size - status.index}">1</th>
-                        <td><a href="" th:href="@{/board/view/{idx}(idx=${item.id})}" th:text="${item.subject}" ></a></td>
+                        <th scope="row" th:text="${pagination.totalElements - pagination.number * pagination.size - status.index}">1</th>
+                        <td>
+                            <a href="" th:href="@{/board/view/{idx}(idx=${item.id})}" th:text="${item.subject}" class="List" ></a>
+                            <span class="small text-danger"
+                                  th:if="${item.comment02List.size() > 0}"
+                                  th:text="${item.comment02List.size()}"></span>
+                        </td>
                         <td><span th:text="${item.writer.nickName}"></span></td>
                         <td th:text="${#temporals.format(item.createDate,'yyyy/MM/dd HH:mm')}"></td>
                     </tr>

@@ -60,8 +60,9 @@ public class BoardService {
         } else if(category.equals("writer")) {
             Page<Board02> boardList = boardRepository.findByWriter(keyword,pageable);
             return boardList;
+        } else {
+            Page<Board02> boardList = boardRepository.findByAllCategory(keyword,pageable);
+            return boardList;
         }
-        throw new RuntimeException("검색 결과가 없습니다.");
-
     }
 }

@@ -20,8 +20,12 @@ public interface BoardRepository extends JpaRepository<Board02,Integer> {
     // delete == delete
     @Override
     Page<Board02> findAll(Pageable pageable);
+    @Query("select b from Board02 b where b.writer.nickName like %:keyword% or" +
+                                        " b.subject like %:keyword% or" +
+                                        " b.content like %:keyword%")
+    Page<Board02> findByAllCategory(@Param("keyword") String keyword,Pageable pageable);
 
-    //jpql
+    //jpql(select를 제외한 나머지는 @Modify를 붙혀야한다.)
     /*@Modifying
     @Query("select b from Board02 b where b.subject like %:keyword%")
     List<Board02> findBySubject(@Param("keyword") String keyword, Pageable pageable);*/

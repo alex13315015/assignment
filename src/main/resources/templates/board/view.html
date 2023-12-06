@@ -5,12 +5,12 @@
 <div layout:fragment="content" class="main">
     <div class="container">
         <div class="row justify-content-center">
-            <div class="col-md-10"></div>
+            <div class="col-md-12"></div>
                 <h2>VIEW</h2>
                 <h4 th:text="${board.subject}"></h4>
                 <hr>
                 <div class="mt-5 mb-5 d-flex justify-content-between">
-                    <div th:text="${board.content}">
+                    <div class="text-box" th:utext="${@commonMarkdownRender.markdownRender(board.content)}">
                     </div>
                     <div class="writerInfo">
                         <span th:text="${board.writer.nickName}"></span>
@@ -26,7 +26,7 @@
                                         <span class="badge bg-dark btn-del" th:data-idx="${comment.id}">삭제</span>
                                     </div>
                                     <div>
-                                        <span class="writer" th:text="writer"></span>
+                                        <span class="writer" th:text="${comment.writer.nickName}"></span>
                                         <span th:text="${#temporals.format(comment.createDate,'yyyy-MM-dd HH:mm:ss')}"></span>
                                     </div>
                             </th:block>
@@ -89,5 +89,4 @@
             return false;
         })
     </script>
-</div>
 </html>

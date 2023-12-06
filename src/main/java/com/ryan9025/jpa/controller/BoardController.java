@@ -45,7 +45,7 @@ public class BoardController {
                 .createDate(boardDto.getCreateDate())
                 .build();
         boardService.insertBoard(dbInsertBoard);
-        return "redirect:/board/list";
+        return "redirect:/board/pageList";
     }
     @GetMapping("/list")
     public String list(Model model) {
