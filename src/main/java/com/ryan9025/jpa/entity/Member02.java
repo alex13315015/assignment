@@ -2,11 +2,15 @@ package com.ryan9025.jpa.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.DynamicUpdate;
+
 @Entity
 @Getter
-@NoArgsConstructor
+//@Setter
+@NoArgsConstructor(access = AccessLevel.PROTECTED) // private으로 생성안되게!
 @AllArgsConstructor
 @Builder
+@DynamicUpdate
 @Table(name = "memberManager")
 public class Member02 {
 
@@ -32,4 +36,9 @@ public class Member02 {
     private String role;
 
 
+    public void updateMemberInfo(String nickname, int age, String email) {
+        this.nickName = nickname;
+        this.age = age;
+        this.email = email;
+    }
 }

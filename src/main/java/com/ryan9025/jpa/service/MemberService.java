@@ -12,7 +12,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -63,19 +62,24 @@ public class MemberService {
         //throw new NotFoundMember("해당 회원을 찾을 수 없습니다.");
     }
     @Transactional
-    public MemberDto modifyMember(MemberDto memberDto) {
+    public void modifyMember(MemberDto memberDto) {
         log.info("getUserID==="+memberDto.getUserID());
         Optional<Member02> memberEntity = memberRepository.findByUserID(memberDto.getUserID());
         if(memberEntity.isPresent()) {
-            Member02 updateMember = Member02.builder()
+           memberEntity.get().updateMemberInfo(memberDto.getNickName(), memberDto.getAge(), memberDto.getEmail());
+            //memberRepository.save(memberEntity.get());
+            //updateMember.setNickName(memberDto.getNickName());
+            //updateMember.setAge(memberDto.getAge());
+            //updateMember.setEmail(memberDto.getEmail());
+            //memberRepository.save(updateMember);
+            /*Member02 updateMember = Member02.builder()
                     .nickName(memberDto.getNickName())
                     .age(memberDto.getAge())
                     .email(memberDto.getEmail())
                     .build();
             log.info("updateMember ==== " + updateMember.toString());
-            memberRepository.save(updateMember);
+            memberRepository.save(updateMember);*/
         }
-        return null;
     }
 
     public boolean deleteMember(String userID) {
