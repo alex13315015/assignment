@@ -27,7 +27,6 @@ public class Member02 {
     @Column(length = 100)
     private String nickName;
 
-    private Integer age;
 
     @Column(length = 100)
     private String email;
@@ -36,9 +35,8 @@ public class Member02 {
     private String role;
 
 
-    public void updateMemberInfo(String nickname, int age, String email) {
+    public void updateMemberInfo(String nickname, String email) {
         this.nickName = nickname;
-        this.age = age;
         this.email = email;
     }
 }

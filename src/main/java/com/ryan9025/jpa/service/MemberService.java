@@ -25,7 +25,6 @@ public class MemberService {
                 .userID(memberDto.getUserID())
                 .password(bCryptPasswordEncoder.encode(memberDto.getPassword()))
                 .nickName(memberDto.getNickName())
-                .age(memberDto.getAge())
                 .email(memberDto.getEmail())
                 .role("ROLE_USER")
                 .build();
@@ -66,7 +65,7 @@ public class MemberService {
         log.info("getUserID==="+memberDto.getUserID());
         Optional<Member02> memberEntity = memberRepository.findByUserID(memberDto.getUserID());
         if(memberEntity.isPresent()) {
-           memberEntity.get().updateMemberInfo(memberDto.getNickName(), memberDto.getAge(), memberDto.getEmail());
+           memberEntity.get().updateMemberInfo(memberDto.getNickName(), memberDto.getEmail());
             //memberRepository.save(memberEntity.get());
             //updateMember.setNickName(memberDto.getNickName());
             //updateMember.setAge(memberDto.getAge());

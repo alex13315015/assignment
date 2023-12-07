@@ -14,7 +14,6 @@ public class MemberDto {
     private String userID;
     private String password;
     private String nickName;
-    private int age;
     private String email;
     private String role;
 
@@ -24,7 +23,6 @@ public class MemberDto {
                 .userID(member02.getUserID())
                 .password(member02.getPassword())
                 .nickName(member02.getNickName())
-                .age(member02.getAge())
                 .email(member02.getEmail())
                 .role(member02.getRole())
                 .build();
