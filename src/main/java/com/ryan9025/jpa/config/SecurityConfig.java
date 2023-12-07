@@ -1,5 +1,7 @@
 package com.ryan9025.jpa.config;
 
+import com.ryan9025.jpa.service.Oauth2DetailsService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -10,7 +12,9 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 @EnableWebSecurity
+@RequiredArgsConstructor
 public class SecurityConfig {
+    private final Oauth2DetailsService oauth2DetailsService;
     @Bean
     public BCryptPasswordEncoder bCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();
@@ -35,6 +39,13 @@ public class SecurityConfig {
                         .logoutSuccessUrl("/member/login")
                         .invalidateHttpSession(true)
         )
+                .oauth2Login((oauth2Login) -> oauth2Login
+                        .loginPage("/member/login")
+                        .defaultSuccessUrl("/")
+                        .userInfoEndpoint(userInf -> userInf
+                                .userService(oauth2DetailsService)
+                        )
+                )
                 .csrf((auth) -> auth.disable());
         return httpSecurity.build();
     }

@@ -21,10 +21,13 @@
                         <p class="alert alert-danger" th:text="${exception}">아이디 패스워드를 확인해주세요.</p>
                     </div>
                     <div class="mt-2">
-                    <button class="btn btn-dark w-100 py-2 mt-5" type="submit">로그인</button>
+                        <button class="btn btn-dark w-100 py-2 mt-5" type="submit">로그인</button>
+                        <a href="/mail/find-password" class="btn btn-dark w-100 py-2 mt-5">비밀번호찾기</a>
                     </div>
                 </form>
-            <a href="/mail/find-password" class="btn btn-dark w-100 py-2 mt-5">비밀번호찾기</a>
+            <div class="mt-2">
+                <a href="/oauth2/authorization/google" class="btn btn-dark w-100 py-2 mt-5">구글로그인</a>
+            </div>
         </div>
         <!--<script>
             const tl = gsap.timeline();
