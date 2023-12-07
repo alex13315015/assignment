@@ -19,7 +19,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class Oauth2DetailsService extends DefaultOAuth2UserService {
     private final MemberRepository memberRepository;
-    //private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
         //log.info("구글 로그인 하면 여기로 들어오고 여기서 필요한 작업하면 된다!");
@@ -31,7 +31,7 @@ public class Oauth2DetailsService extends DefaultOAuth2UserService {
         String nickName = (String) oAuth2UserInfo.get("name");
         String userID = "google_" + (String) oAuth2UserInfo.get("sub");
         String role = "ROLE_USER";
-        String password = new BCryptPasswordEncoder().encode(UUID.randomUUID().toString());
+        String password = bCryptPasswordEncoder.encode(UUID.randomUUID().toString());
 
         Member02 dbInsertMember = Member02.builder()
                 .userID(userID)

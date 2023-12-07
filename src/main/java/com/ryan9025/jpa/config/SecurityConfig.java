@@ -16,11 +16,6 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 public class SecurityConfig {
     private final Oauth2DetailsService oauth2DetailsService;
     @Bean
-    public BCryptPasswordEncoder bCryptPasswordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
-
-    @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.authorizeHttpRequests((auth) -> auth
                 .requestMatchers("/board/pageList","/member/join","/member/login","/css/**","/js/**","/images/**","/")
