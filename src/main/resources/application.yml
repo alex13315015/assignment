@@ -33,6 +33,18 @@ spring:
         show-sql: true
         dialect: org.hibernate.dialect.Oracle12cDialect
 
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: 236240561878-9pf58g8rgbkklm4ptcrc068nefnr4stk.apps.googleusercontent.com
+            client-secret: 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
+            scope:
+              - profile
+              - email
+
+
 #### log ??  fatal > error > warn > info > debug
 logging:
   level:
