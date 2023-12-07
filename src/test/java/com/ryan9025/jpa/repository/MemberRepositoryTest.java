@@ -34,7 +34,6 @@ class MemberRepositoryTest {
                     .userID("ryan9025" + i)
                     .email("alex" + i + "@naver.com")
                     .nickName("라이언" + i)
-                    .age(10 + i)
                     .build();
             memberRepository.save(dbInsertMember);
         }

@@ -27,11 +27,33 @@ public class Oauth2DetailsService extends DefaultOAuth2UserService {
         //log.info("구글 로그인 하면 여기로 들어오고 여기서 필요한 작업하면 된다!");
         OAuth2User oAuth2User = super.loadUser(userRequest);
         log.info("oAuth2User.getAttributes()==={}",oAuth2User.getAttributes());
+        log.info("userRequest==={}",userRequest.getClientRegistration().getRegistrationId());
         Map<String,Object> oAuth2UserInfo = (Map)oAuth2User.getAttributes();
 
-        String email = (String) oAuth2UserInfo.get("email");
-        String nickName = (String) oAuth2UserInfo.get("name");
-        String userID = "google_" + (String) oAuth2UserInfo.get("sub");
+        //로그인 정보를 알려주는 각 소셜 ex) google, naver, kakao...
+        String provider = userRequest.getClientRegistration().getRegistrationId();
+
+        String email = null;
+        String nickName = null;
+        String userID = null;
+
+        if(provider.equals("google")) {
+            email = (String) oAuth2UserInfo.get("email");
+            nickName = (String) oAuth2UserInfo.get("name");
+            userID = provider + "_" + (String) oAuth2UserInfo.get("sub");
+
+        } else if(provider.equals("naver")) {
+            Map<String,Object> naverResponse = (Map) oAuth2UserInfo.get("response");
+            email = (String) naverResponse.get("email");
+            nickName = (String) naverResponse.get("nickname");
+            userID = provider + "_" + (String) naverResponse.get("id");
+        } else if(provider.equals("kakao")) {
+            Map<String,Object> kakaoResponse = (Map) oAuth2UserInfo.get("properties");
+            email = (String) kakaoResponse.get("email");
+            nickName = (String) kakaoResponse.get("nickname");
+            userID = provider + "_" + (String) oAuth2UserInfo.get("id").toString();
+        }
+
         String role = "ROLE_USER";
         String password = bCryptPasswordEncoder.encode(UUID.randomUUID().toString());
 

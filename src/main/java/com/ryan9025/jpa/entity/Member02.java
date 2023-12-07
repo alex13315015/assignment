@@ -18,7 +18,7 @@ public class Member02 {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Integer id;
 
-    @Column(length = 30, unique = true)
+    @Column(length = 100, unique = true)
     private String userID;
 
     @Column(length = 100, nullable = true)
