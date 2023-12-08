@@ -3,6 +3,10 @@ package com.ryan9025.jpa.service;
 import com.ryan9025.jpa.dto.CustomUserDetails;
 import com.ryan9025.jpa.entity.Member02;
 import com.ryan9025.jpa.repository.MemberRepository;
+import com.ryan9025.jpa.social.GoolgleUserInfo;
+import com.ryan9025.jpa.social.KakaoUserInfo;
+import com.ryan9025.jpa.social.NaverUserInfo;
+import com.ryan9025.jpa.social.SocialUserInfo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -30,31 +34,35 @@ public class Oauth2DetailsService extends DefaultOAuth2UserService {
         log.info("userRequest==={}",userRequest.getClientRegistration().getRegistrationId());
         Map<String,Object> oAuth2UserInfo = (Map)oAuth2User.getAttributes();
 
+        SocialUserInfo socialUserInfo = null; // 인터페이스 구현
+
         //로그인 정보를 알려주는 각 소셜 ex) google, naver, kakao...
         String provider = userRequest.getClientRegistration().getRegistrationId();
 
-        String email = null;
-        String nickName = null;
-        String userID = null;
-
         if(provider.equals("google")) {
-            email = (String) oAuth2UserInfo.get("email");
-            nickName = (String) oAuth2UserInfo.get("name");
-            userID = provider + "_" + (String) oAuth2UserInfo.get("sub");
+            socialUserInfo = new GoolgleUserInfo(oAuth2UserInfo);
+            //email = (String) oAuth2UserInfo.get("email");
+            //nickName = (String) oAuth2UserInfo.get("name");
+            //userID = provider + "_" + (String) oAuth2UserInfo.get("sub");
 
         } else if(provider.equals("naver")) {
-            Map<String,Object> naverResponse = (Map) oAuth2UserInfo.get("response");
-            email = (String) naverResponse.get("email");
-            nickName = (String) naverResponse.get("nickname");
-            userID = provider + "_" + (String) naverResponse.get("id");
+            socialUserInfo = new NaverUserInfo(oAuth2UserInfo);
+            //Map<String,Object> naverResponse = (Map) oAuth2UserInfo.get("response");
+            //email = (String) naverResponse.get("email");
+            //nickName = (String) naverResponse.get("nickname");
+            //userID = provider + "_" + (String) naverResponse.get("id");
 
         } else if(provider.equals("kakao")) {
-            Map<String,Object> kakaoResponse = (Map) oAuth2UserInfo.get("properties");
-            email = (String) kakaoResponse.get("email");
-            nickName = (String) kakaoResponse.get("nickname");
-            userID = provider + "_" + (String) oAuth2UserInfo.get("id").toString();
+            socialUserInfo = new KakaoUserInfo(oAuth2UserInfo);
+            //Map<String,Object> kakaoResponse = (Map) oAuth2UserInfo.get("properties");
+            //email = (String) kakaoResponse.get("email");
+            //nickName = (String) kakaoResponse.get("nickname");
+            //userID = provider + "_" + (String) oAuth2UserInfo.get("id").toString();
         }
 
+        String email = socialUserInfo.getEmail();
+        String nickName = socialUserInfo.getName();
+        String userID = socialUserInfo.getProviderID();
         String role = "ROLE_USER";
         String password = bCryptPasswordEncoder.encode(UUID.randomUUID().toString());
 
