@@ -41,23 +41,12 @@ public class Oauth2DetailsService extends DefaultOAuth2UserService {
 
         if(provider.equals("google")) {
             socialUserInfo = new GoolgleUserInfo(oAuth2UserInfo);
-            //email = (String) oAuth2UserInfo.get("email");
-            //nickName = (String) oAuth2UserInfo.get("name");
-            //userID = provider + "_" + (String) oAuth2UserInfo.get("sub");
 
         } else if(provider.equals("naver")) {
             socialUserInfo = new NaverUserInfo(oAuth2UserInfo);
-            //Map<String,Object> naverResponse = (Map) oAuth2UserInfo.get("response");
-            //email = (String) naverResponse.get("email");
-            //nickName = (String) naverResponse.get("nickname");
-            //userID = provider + "_" + (String) naverResponse.get("id");
 
         } else if(provider.equals("kakao")) {
             socialUserInfo = new KakaoUserInfo(oAuth2UserInfo);
-            //Map<String,Object> kakaoResponse = (Map) oAuth2UserInfo.get("properties");
-            //email = (String) kakaoResponse.get("email");
-            //nickName = (String) kakaoResponse.get("nickname");
-            //userID = provider + "_" + (String) oAuth2UserInfo.get("id").toString();
         }
 
         String email = socialUserInfo.getEmail();
