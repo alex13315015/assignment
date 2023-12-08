@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+                xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<div class="container" th:fragment="headerFragment">
+    <header class="d-flex flex-wrap justify-content-center align-items-center py-3 mb-4 border-bottom ">
+        <a href="/static" th:href="@{/}" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
+            <img src="/images/logo.png" alt="" class="logo">
+        </a>
+        <div sec:authorize="!isAuthenticated()">
+            <ul class="nav nav-pills">
+                <li class="mx-2"><a href=""><i class="bi bi-house-heart text-dark" style="font-size: 2rem"></i></a></li>
+                <li class="mx-2"><a href=""><i class="bi bi-person-fill-lock text-dark" style="font-size: 2rem"></i></a></li>
+            </ul>
+        </div>
+        <div sec:authorize="isAuthenticated()">
+            <ul class="nav nav-pills">
+                <li><a href=""><i class="bi bi-house-heart" style="font-size: 1.5rem"></i></a></li>
+                <li><a href=""><i class="bi bi-person-fill-lock" style="font-size: 1.5rem"></i></a></li>
+            </ul>
+        </div>
+    </header>
+</div>
+</html>
