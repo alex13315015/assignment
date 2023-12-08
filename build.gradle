@@ -60,3 +60,4 @@ sourceSets {
 		}
 	}
 }
+compileJava.dependsOn("clean")

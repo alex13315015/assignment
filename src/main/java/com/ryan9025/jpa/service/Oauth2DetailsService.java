@@ -47,6 +47,7 @@ public class Oauth2DetailsService extends DefaultOAuth2UserService {
             email = (String) naverResponse.get("email");
             nickName = (String) naverResponse.get("nickname");
             userID = provider + "_" + (String) naverResponse.get("id");
+
         } else if(provider.equals("kakao")) {
             Map<String,Object> kakaoResponse = (Map) oAuth2UserInfo.get("properties");
             email = (String) kakaoResponse.get("email");
