@@ -61,24 +61,13 @@ public class MemberService {
         //throw new NotFoundMember("해당 회원을 찾을 수 없습니다.");
     }
     @Transactional
-    public void modifyMember(MemberDto memberDto) {
+    public Member02 modifyMember(MemberDto memberDto) {
         log.info("getUserID==="+memberDto.getUserID());
         Optional<Member02> memberEntity = memberRepository.findByUserID(memberDto.getUserID());
         if(memberEntity.isPresent()) {
-           memberEntity.get().updateMemberInfo(memberDto.getNickName(), memberDto.getEmail());
-            //memberRepository.save(memberEntity.get());
-            //updateMember.setNickName(memberDto.getNickName());
-            //updateMember.setAge(memberDto.getAge());
-            //updateMember.setEmail(memberDto.getEmail());
-            //memberRepository.save(updateMember);
-            /*Member02 updateMember = Member02.builder()
-                    .nickName(memberDto.getNickName())
-                    .age(memberDto.getAge())
-                    .email(memberDto.getEmail())
-                    .build();
-            log.info("updateMember ==== " + updateMember.toString());
-            memberRepository.save(updateMember);*/
+           return memberEntity.get().updateMemberInfo(memberDto.getNickName(), memberDto.getEmail());
         }
+        throw new RuntimeException("없음");
     }
 
     public boolean deleteMember(String userID) {

@@ -1,9 +1,12 @@
 package com.ryan9025.jpa.controller;
 
+import com.ryan9025.jpa.dto.CustomUserDetails;
 import com.ryan9025.jpa.dto.MemberDto;
+import com.ryan9025.jpa.entity.Member02;
 import com.ryan9025.jpa.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -55,8 +58,10 @@ public class MemberController {
     }
 
     @PostMapping("/modify")
-    public String modifyProcess(@ModelAttribute MemberDto memberDto, Model model) {
-        memberService.modifyMember(memberDto);
+    public String modifyProcess(@ModelAttribute MemberDto memberDto, Model model,
+                                @AuthenticationPrincipal CustomUserDetails customUserDetails) {
+        Member02 updateMember = memberService.modifyMember(memberDto);
+        customUserDetails.getLoggedMember().updateMemberInfo(memberDto.getNickName(),memberDto.getEmail());
         return "redirect:/";
     }
 

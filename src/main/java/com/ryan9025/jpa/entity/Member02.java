@@ -35,8 +35,9 @@ public class Member02 {
     private String role;
 
 
-    public void updateMemberInfo(String nickname, String email) {
+    public Member02 updateMemberInfo(String nickname, String email) {
         this.nickName = nickname;
         this.email = email;
+        return this;
     }
 }
