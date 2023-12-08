@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/layout/layout}">
+<div layout:fragment="content" class="main">
+    <div class="container d-flex justify-content-center">
+        <div class="col-6">
+            <h2>회원가입</h2>
+            <form action="/auth/login" method="post" th:action="@{/auth/login}">
+                <div class="mb-3">
+                    <label for="userID" class="form-label">아이디</label>
+                    <input type="text" class="form-control" id="userID" name="userID" placeholder="아이디를 입력하세요.">
+                    <p class="error"></p>
+                </div>
+                <div class="mb-3">
+                    <label for="password" class="form-label">패스워드</label>
+                    <input type="password" class="form-control" id="password" name="password" placeholder="비밀번호를 입력하세요.">
+                    <p class="error"></p>
+                </div>
+                <div class="mt-2">
+                    <button class="btn btn-dark w-100 py-2 mt-5" type="submit">로그인</button>
+                    <a href="/mail/find-password" class="btn btn-dark w-100 py-2 mt-5">비밀번호찾기</a>
+                </div>
+            </form>
+            <div class="mt-2">
+                <a href="/oauth2/authorization/google" class="btn btn-dark w-100 py-2 mt-5">구글로그인</a>
+                <a href="/oauth2/authorization/naver" class="btn btn-dark w-100 py-2 mt-5">네이버로그인</a>
+                <a href="/oauth2/authorization/kakao"><img src="/images/kakao_login.png" alt="" class="mt-5"></a>
+                <a href="/oauth2/authorization/github" class="btn btn-dark w-100 py-2 mt-5">깃허브로그인</a>
+            </div>
+        </div>
+    </div>
+    <!--<script>
+        const tl = gsap.timeline();
+        tl
+            .from("header img",{scale:0,ease:"elastic"})
+            .from("header .nav li",{x:50,opacity: 0,stagger:0.1})
+            .from(".main h2",{x:50,opacity: 0});
+        .from("form",{opacity:0,y:100,ease:"back",delay:0.5});
+    </script>-->
+</div>
+</html>
