@@ -3,10 +3,7 @@ package com.ryan9025.jpa.service;
 import com.ryan9025.jpa.dto.CustomUserDetails;
 import com.ryan9025.jpa.entity.Member02;
 import com.ryan9025.jpa.repository.MemberRepository;
-import com.ryan9025.jpa.social.GoolgleUserInfo;
-import com.ryan9025.jpa.social.KakaoUserInfo;
-import com.ryan9025.jpa.social.NaverUserInfo;
-import com.ryan9025.jpa.social.SocialUserInfo;
+import com.ryan9025.jpa.social.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -43,10 +40,13 @@ public class Oauth2DetailsService extends DefaultOAuth2UserService {
             socialUserInfo = new GoolgleUserInfo(oAuth2UserInfo);
 
         } else if(provider.equals("naver")) {
-            socialUserInfo = new NaverUserInfo(oAuth2UserInfo);
+            socialUserInfo = new NaverUserInfo((Map)oAuth2UserInfo.get("response"));
 
         } else if(provider.equals("kakao")) {
             socialUserInfo = new KakaoUserInfo(oAuth2UserInfo);
+
+        } else if(provider.equals("github")) {
+            socialUserInfo = new GithubUserInfo(oAuth2UserInfo);
         }
 
         String email = socialUserInfo.getEmail();
