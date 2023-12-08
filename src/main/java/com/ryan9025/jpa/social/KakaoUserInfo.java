@@ -13,7 +13,7 @@ public class KakaoUserInfo implements SocialUserInfo{
 
     @Override
     public String getProviderID() {
-        return getProvider() + "_" + attributes.get("id").toString();
+        return getProvider() + "_" + attributes.get("id");
     }
 
     @Override
@@ -23,6 +23,8 @@ public class KakaoUserInfo implements SocialUserInfo{
 
     @Override
     public String getName() {
-        return (String) attributes.get("nickname");
+        Map<String,Object> properties = (Map) attributes.get("properties");
+        String nickName = (String) properties.get("nickname");
+        return nickName;
     }
 }
