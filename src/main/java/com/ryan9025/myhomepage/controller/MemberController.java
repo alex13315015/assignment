@@ -18,4 +18,10 @@ public class MemberController {
         model.addAttribute("memberInfo",customUserDetails.getLoggedMember());
         return "/member/myPage";
     }
+
+    @GetMapping("/modify/{id}")
+    public String modify(@PathVariable int id, Model model , @AuthenticationPrincipal CustomUserDetails customUserDetails) {
+        model.addAttribute("memberInfo",customUserDetails.getLoggedMember());
+        return "/member/modify";
+    }
 }

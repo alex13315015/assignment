@@ -35,11 +35,11 @@ public class Member {
     @Column(nullable = false, unique = true)
     private String email;
 
+    private String phoneNumber;
+
     private String mbti;
 
     private String description;
-
-    private String phoneNumber;
 
     @Column(name = "role")
     @Enumerated(EnumType.STRING)

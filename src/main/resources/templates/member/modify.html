@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/layout/layout}">
+<div layout:fragment="content" class="main">
+    <div class="container d-flex justify-content-center">
+        <div class="col-6">
+            <h2>회원가입</h2>
+            <form action="/member/modify" method="post" th:action="@{/member/modify}">
+                <div class="mb-3">
+                    <label for="userID" class="form-label">아이디</label>
+                    <input type="text" class="form-control" id="userID" name="userID" th:value="${memberInfo.userID}" readonly>
+                </div>
+                <!--<div class="mb-3">
+                    <label for="password" class="form-label">패스워드</label>
+                    <input type="password" class="form-control" id="password" name="password" placeholder="비밀번호를 입력하세요.">
+                </div> -->
+                <div class="mb-3">
+                    <label for="name" class="form-label">이름</label>
+                    <input type="text" class="form-control" id="name" name="name" th:value="${memberInfo.name}">
+                </div>
+                <div class="mb-3">
+                    <label for="email" class="form-label">이메일</label>
+                    <input type="email" class="form-control" id="email" name="email" th:value="${memberInfo.email}">
+                </div>
+                <div class="mb-3">
+                    <label for="phoneNumber" class="form-label">H.P</label>
+                    <input type="text" class="form-control" id="phoneNumber" name="phoneNumber" th:value="${memberInfo.phoneNumber}">
+                </div>
+                <div class="mb-3">
+                    <label for="mbti" class="form-label">MBTI</label>
+                    <input type="text" class="form-control" id="mbti" name="mbti" th:value="${memberInfo.mbti}">
+                </div>
+                <div class="mb-3">
+                    <label for="description" class="form-label">자기소개</label>
+                    <textarea class="form-control" id="description" name="description"
+                              th:text="${memberInfo.description}"></textarea>
+                </div>
+                <div class="mt-2">
+                    <a href="/member/modify/" class="btn btn-dark w-100 py-2 mt-5">수정하기</a>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+</html>
