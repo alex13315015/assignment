@@ -8,29 +8,38 @@
             <h2>MY PAGE</h2>
             <div class="myPage-header">
                 <div class="profile">
-                    <i class="bi bi-person-circle" style="font-size: 2rem"></i>
+                    <th:block th:if="${memberInfo.profileImageUrl == null}">
+                    <i class="bi bi-person-circle" style="font-size: 100px"></i>
+                    </th:block>
+                    <th:block th:unless="${memberInfo.profileImageUrl == null}">
+                    <img src="">
+                    </th:block>
                 </div>
+                <form action="" method="post" enctype="multipart/form-data" id="profileImageForm" style="display: none">
+                    <input type="file" name="profileImageUrl" id="profileSelect">
+                </form>
                 <div class="info">
                     <div class="btns">
                         <a href="" class="btn btn-dark">스토리</a>
                         <button class="btn btn-outline-dark">구독하기</button>
                         <button class="btn btn-secondary"
-                                data-bs-target="#exampleModal"><i class="bi bi-person-fill-gear"></i></button>
+                                data-bs-toggle="modal"
+                                data-bs-target="#menuModal"><i class="bi bi-person-fill-gear"></i></button>
                     </div>
-                    <div class="title">
+                    <div class="title mt-3">
                         <h3 th:text="${memberInfo.name}">ryan9025</h3>
                         <div th:text="${memberInfo.description}">자기소개</div>
                     </div>
                     <!-- Button trigger modal -->
                     <!-- Modal -->
-                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal fade" id="menuModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <div class="modal-body d-grid">
-                                    <a href="/auth/logout" class="btn btn-dark">로그아웃</a>
-                                    <a href="/member/modify" class="btn btn-outline-dark mt-2">수정</a>
-                                    <button type="button" class="btn btn-outline-dark mt-2"
-                                            data-bs-dismiss="modal" >닫기</button>
+                                    <a href="/auth/logout" class="btn btn-dark"> 로그아웃 </a>
+                                    <a href="/member/modify/1" th:href="@{/member/modify/{id}(id=${memberInfo.id})}" class="btn btn-outline-dark mt-2"> 수정하기 </a>
+                                    <button type="button" class="btn btn-outline-secondary mt-2"
+                                            data-bs-dismiss="modal">닫기</button>
                                 </div>
                             </div>
                         </div>
@@ -39,5 +48,34 @@
             </div>
         </div>
     </div>
+    <script th:inline="javascript">
+        const id = [[${memberInfo.id}]];
+        $(".profile").on("click",function () {
+            console.log("click");
+            $("#profileSelect").trigger("click");
+            $("#profileSelect").on("change",function (e) {
+                console.log(e);
+                const file = e.target.files[0];
+                if(!file.type.match("image.*")) {
+                    alert("이미지 파일만 업로드 할 수 있습니다.");
+                    return false;
+                }
+                const profileImageForm = $("#profileImageForm")[0];
+                const formData = new FormData(profileImageForm);
+                console.log(formData);
+                //key:value
+                $.ajax({
+                    url: `/api/member/${id}/profileImageUrl`,
+                    data: formData,
+                    method: "put",
+                    contentType: false, // x-www-form-urlencode로 되는거 막기
+                    processData: false, // query string으로 parsing 되는거 막기
+                    success: function (response) {
+                        console.log(response);
+                    }
+                })
+            });
+        })
+    </script>
 </div>
 </html>

@@ -45,6 +45,8 @@ public class Member {
     @Enumerated(EnumType.STRING)
     private Role role;
 
+    private String profileImageUrl;
+
     @CreatedDate
     private LocalDateTime createDate;
 
