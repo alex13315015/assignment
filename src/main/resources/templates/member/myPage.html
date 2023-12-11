@@ -12,7 +12,7 @@
                     <i class="bi bi-person-circle" style="font-size: 100px"></i>
                     </th:block>
                     <th:block th:unless="${memberInfo.profileImageUrl == null}">
-                    <img src="">
+                    <img src="" th:src="@{|/upload/${memberInfo.profileImageUrl}|}">
                     </th:block>
                 </div>
                 <form action="" method="post" enctype="multipart/form-data" id="profileImageForm" style="display: none">
