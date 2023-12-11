@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/layout/layout}">
+<div layout:fragment="content" class="main">
+    <div class="container d-flex justify-content-center">
+        <div class="col-12">
+            <h2>MY PAGE</h2>
+            <div class="myPage-header">
+                <div class="profile">
+                    <i class="bi bi-person-circle" style="font-size: 2rem"></i>
+                </div>
+                <div class="info">
+                    <div class="btns">
+                        <a href="" class="btn btn-dark">스토리</a>
+                        <button class="btn btn-outline-dark">구독하기</button>
+                        <button class="btn btn-secondary"
+                                data-bs-target="#exampleModal"><i class="bi bi-person-fill-gear"></i></button>
+                    </div>
+                    <div class="title">
+                        <h3 th:text="${memberInfo.name}">ryan9025</h3>
+                        <div th:text="${memberInfo.description}">자기소개</div>
+                    </div>
+                    <!-- Button trigger modal -->
+                    <!-- Modal -->
+                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-body d-grid">
+                                    <a href="/auth/logout" class="btn btn-dark">로그아웃</a>
+                                    <a href="/member/modify" class="btn btn-outline-dark mt-2">수정</a>
+                                    <button type="button" class="btn btn-outline-dark mt-2"
+                                            data-bs-dismiss="modal" >닫기</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</html>
