@@ -5,8 +5,9 @@
 <div layout:fragment="content" class="main">
     <div class="container d-flex justify-content-center">
         <div class="col-6">
-            <h2>회원가입</h2>
-            <form action="/member/modify" method="post" th:action="@{/member/modify}">
+            <h2>회원정보수정</h2>
+            <form action="/member/modify" method="post"
+                  th:action="@{/member/modify/{id}(id=${memberInfo.id})}">
                 <div class="mb-3">
                     <label for="userID" class="form-label">아이디</label>
                     <input type="text" class="form-control" id="userID" name="userID" th:value="${memberInfo.userID}" readonly>
@@ -36,8 +37,8 @@
                     <textarea class="form-control" id="description" name="description"
                               th:text="${memberInfo.description}"></textarea>
                 </div>
-                <div class="mt-2">
-                    <a href="/member/modify/" class="btn btn-dark w-100 py-2 mt-5">수정하기</a>
+                <div class="mt-2 d-grid">
+                    <a href="/member/modify" class="btn btn-dark w-100 py-2 mt-5">수정하기</a>
                 </div>
             </form>
 
