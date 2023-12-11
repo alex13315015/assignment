@@ -19,12 +19,24 @@
                 </div>
                 <div class="mb-3">
                     <label for="name" class="form-label">이름</label>
-                    <input type="name" class="form-control" id="name" name="name" th:field="*{name}">
+                    <input type="text" class="form-control" id="name" name="name" th:field="*{name}">
                 </div>
                 <div class="mb-3">
                     <label for="email" class="form-label">이메일</label>
                     <input type="email" class="form-control" id="email" name="email" th:field="*{email}">
                     <p class="error" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></p>
+                </div>
+                <div class="mb-3">
+                    <label for="phoneNumber" class="form-label">H.P</label>
+                    <input type="text" class="form-control" id="phoneNumber" name="phoneNumber">
+                </div>
+                <div class="mb-3">
+                    <label for="mbti" class="form-label">MBTI</label>
+                    <input type="text" class="form-control" id="mbti" name="mbti">
+                </div>
+                <div class="mb-3">
+                    <label for="description" class="form-label">자기소개</label>
+                    <textarea class="form-control" id="description" name="description"></textarea>
                 </div>
                 <div class="mt-2">
                     <button class="btn btn-dark w-100 py-2 mt-5" type="submit">가입하기</button>
@@ -36,13 +48,5 @@
             </div>
         </div>
     </div>
-    <!--<script>
-        const tl = gsap.timeline();
-        tl
-            .from("header img",{scale:0,ease:"elastic"})
-            .from("header .nav li",{x:50,opacity: 0,stagger:0.1})
-            .from(".main h2",{x:50,opacity: 0});
-        .from("form",{opacity:0,y:100,ease:"back",delay:0.5});
-    </script>-->
 </div>
 </html>
