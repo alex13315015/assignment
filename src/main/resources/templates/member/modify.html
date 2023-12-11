@@ -37,11 +37,13 @@
                     <textarea class="form-control" id="description" name="description"
                               th:text="${memberInfo.description}"></textarea>
                 </div>
-                <div class="mt-2 d-grid">
-                    <a href="/member/modify" class="btn btn-dark w-100 py-2 mt-5">수정하기</a>
+                <div class="mt-5 d-grid">
+                    <button class="btn btn-primary" id="btnSubmit">MODIFY CONFIRM</button>
                 </div>
             </form>
-
+                <div class="mt-5 d-grid">
+                    <a href="/auth/login" class="btn btn-primary" id="btn-login">LOGIN</a>
+                </div>
         </div>
     </div>
 </div>
