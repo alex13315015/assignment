@@ -12,7 +12,7 @@
                     <i class="bi bi-person-circle" style="font-size: 100px"></i>
                     </th:block>
                     <th:block th:unless="${memberInfo.profileImageUrl == null}">
-                    <img src="" th:src="@{|/upload/${memberInfo.profileImageUrl}|}">
+                    <img src="" th:src="@{|/upload/${memberInfo.profileImageUrl}|}" id="memberProfileImage">
                     </th:block>
                 </div>
                 <form action="" method="post" enctype="multipart/form-data" id="profileImageForm" style="display: none">
@@ -53,6 +53,7 @@
         $(".profile").on("click",function () {
             console.log("click");
             $("#profileSelect").trigger("click");
+        });
             $("#profileSelect").on("change",function (e) {
                 console.log(e);
                 const file = e.target.files[0];
@@ -72,10 +73,14 @@
                     processData: false, // query string으로 parsing 되는거 막기
                     success: function (response) {
                         console.log(response);
+                        const fileReader = new FileReader();
+                        fileReader.onload = function () {
+                            $("#memberProfileImage").attr("src","/upload/" + response.memberInfo.profileImageUrl);
+                        }
+                        fileReader.readAsDataURL(file);
                     }
                 })
-            });
-        })
+            })
     </script>
 </div>
 </html>

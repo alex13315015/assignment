@@ -56,7 +56,7 @@ public class MemberService {
         }
     }
     @Transactional
-    public void changeProfile(int id, MultipartFile profileImageUrl) {
+    public Member changeProfile(int id, MultipartFile profileImageUrl) {
         log.info("id==={}",id);
         UUID uuid = UUID.randomUUID();
         String imageFileName = uuid + "_" + profileImageUrl.getOriginalFilename();
@@ -66,11 +66,13 @@ public class MemberService {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        Optional<Member> optionalMember = memberRepository.findById(id);
+        Optional<Member> optionalMember = memberRepository.findById(id); // 엔티티 member 찾아서
         if(optionalMember.isPresent()) {
-            optionalMember.get().setProfileImageUrl(imageFileName);
+            optionalMember.get().setProfileImageUrl(imageFileName); // setter로 update
+            return optionalMember.get();
         } else {
             throw new UsernameNotFoundException("등록되지 않은 회원입니다.");
         }
+
     }
 }
