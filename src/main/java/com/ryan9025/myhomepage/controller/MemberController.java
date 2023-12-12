@@ -1,6 +1,7 @@
 package com.ryan9025.myhomepage.controller;
 
 import com.ryan9025.myhomepage.dto.CustomUserDetails;
+import com.ryan9025.myhomepage.dto.MemberProfileDto;
 import com.ryan9025.myhomepage.dto.UpdateMemberDto;
 import com.ryan9025.myhomepage.entity.Member;
 import com.ryan9025.myhomepage.service.MemberService;
@@ -23,12 +24,10 @@ public class MemberController {
     private final MemberService memberService;
     private final SubscribeService subscribeService;
     @GetMapping("/myPage/{id}")
-    public String myPage(@PathVariable int id, Model model , @AuthenticationPrincipal CustomUserDetails customUserDetails) {
-        //model.addAttribute("memberInfo",customUserDetails.getLoggedMember());
-        Member memberInfo = memberService.getProfile(id);
-        int suscribeCount = subscribeService.subscribeCount(id);
+    public String myPage(@PathVariable int id, Model model,
+                         @AuthenticationPrincipal CustomUserDetails customUserDetails) {
+        MemberProfileDto memberInfo = memberService.getProfile(id,customUserDetails.getLoggedMember().getId());
         model.addAttribute("memberInfo",memberInfo);
-        model.addAttribute("subscribecount",suscribeCount);
         return "/member/myPage";
     }
 
@@ -39,8 +38,9 @@ public class MemberController {
     }
 
     @PostMapping("/modify/{id}")
-    public String modifyProcess(@PathVariable int id, Model model, UpdateMemberDto updateMemberDto) {
-        memberService.updateMember(id,updateMemberDto);
+    public String modifyProcess(@PathVariable int id, Model model, UpdateMemberDto updateMemberDto ,@AuthenticationPrincipal CustomUserDetails customUserDetails) {
+        Member returnMember = memberService.updateMember(id,updateMemberDto);
+        customUserDetails.setLoggedMember(returnMember);
         return "redirect:/member/myPage/" + id;
     }
 }

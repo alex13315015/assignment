@@ -2,6 +2,7 @@ package com.ryan9025.myhomepage.service;
 
 import com.ryan9025.myhomepage.constant.Role;
 import com.ryan9025.myhomepage.dto.JoinDto;
+import com.ryan9025.myhomepage.dto.MemberProfileDto;
 import com.ryan9025.myhomepage.dto.UpdateMemberDto;
 import com.ryan9025.myhomepage.entity.Member;
 import com.ryan9025.myhomepage.repository.MemberRepository;
@@ -47,7 +48,7 @@ public class MemberService {
         return memberRepository.save(dbJoinMember);
     }
     @Transactional
-    public void updateMember(int id, UpdateMemberDto updateMemberDto) {
+    public Member updateMember(int id, UpdateMemberDto updateMemberDto) {
         Optional<Member> findMember = memberRepository.findById(id);
         if(findMember.isPresent()) {
             Member member = findMember.get();
@@ -59,6 +60,7 @@ public class MemberService {
         } else {
             throw new UsernameNotFoundException("등록되지 않은 회원입니다.");
         }
+        return null;
     }
     @Transactional
     public Member changeProfile(int id, MultipartFile profileImageUrl) {
@@ -87,12 +89,18 @@ public class MemberService {
     }
 
     @Transactional
-    public Member getProfile(int id) {
+    public MemberProfileDto getProfile(int id, int customerDetailsID) {
+        MemberProfileDto memberProfileDto = new MemberProfileDto();
         Member memberInfo =
                 memberRepository.findById(id).orElseThrow(
                         () -> new UsernameNotFoundException("등록되지 않은 회원입니다.")
                 );
-        //int subscribeCount = subscribeRepository.subscribeCount(id);
-        return memberInfo;
+        int subscribeCount = subscribeRepository.subscribeCount(id);
+        int subscribeState = subscribeRepository.subscribeState(customerDetailsID,id);
+        memberProfileDto.setPageOwner(id == customerDetailsID);
+        memberProfileDto.setMember(memberInfo);
+        memberProfileDto.setSubscribeCount(subscribeCount);
+        memberProfileDto.setSubscribeState(subscribeState >= 1);
+        return memberProfileDto;
     }
 }

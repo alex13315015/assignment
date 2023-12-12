@@ -12,4 +12,5 @@ public class MemberProfileDto {
     private boolean pageOwner;
     private Member member;
     private int subscribeCount;
+    private boolean subscribeState;
 }
