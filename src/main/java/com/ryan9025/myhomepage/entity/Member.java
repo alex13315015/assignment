@@ -1,9 +1,9 @@
 package com.ryan9025.myhomepage.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.ryan9025.myhomepage.constant.Role;
 import jakarta.persistence.*;
 import lombok.*;
-import net.minidev.json.annotate.JsonIgnore;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -28,8 +28,8 @@ public class Member {
     @Column(nullable = false, unique = true)
     private String userID;
 
-    @Column(nullable = false)
     @JsonIgnore
+    @Column(nullable = false)
     private String password;
 
     private String name;
