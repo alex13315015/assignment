@@ -3,6 +3,7 @@ package com.ryan9025.myhomepage.entity;
 import com.ryan9025.myhomepage.constant.Role;
 import jakarta.persistence.*;
 import lombok.*;
+import net.minidev.json.annotate.JsonIgnore;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -28,6 +29,7 @@ public class Member {
     private String userID;
 
     @Column(nullable = false)
+    @JsonIgnore
     private String password;
 
     private String name;
