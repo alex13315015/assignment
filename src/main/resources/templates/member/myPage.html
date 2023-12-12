@@ -5,7 +5,7 @@
 <div layout:fragment="content" class="main">
     <div class="container d-flex justify-content-center">
         <div class="col-12">
-            <h2>MY PAGE</h2>
+            <h2 class="mb-5">MY PAGE</h2>
             <div class="myPage-header">
                 <div class="profile">
                     <th:block th:if="${memberInfo.profileImageUrl == null}">
@@ -16,15 +16,18 @@
                     </th:block>
                 </div>
                 <form action="" method="post" enctype="multipart/form-data" id="profileImageForm" style="display: none">
-                    <input type="file" name="profileImageUrl" id="profileSelect">
+                    <input th:type="file" name="profileImageUrl" id="profileSelect">
                 </form>
                 <div class="info">
                     <div class="btns">
                         <a href="" class="btn btn-dark">스토리</a>
-                        <button class="btn btn-outline-dark">구독하기</button>
+                        <button class="btn btn-outline-dark" id="btnSubscribe">구독하기</button>
                         <button class="btn btn-secondary"
                                 data-bs-toggle="modal"
                                 data-bs-target="#menuModal"><i class="bi bi-person-fill-gear"></i></button>
+                    </div>
+                    <div class="subscribe mt-3 mb-3">
+                        <span>구독자수</span><span th:text="${subscribecount}" class="mx-2">3</span>
                     </div>
                     <div class="title mt-3">
                         <h3 th:text="${memberInfo.name}">ryan9025</h3>
@@ -80,7 +83,19 @@
                         fileReader.readAsDataURL(file);
                     }
                 })
-            })
+            });
+
+
+            $("#btnSubscribe").on("click",function () {
+                console.log("click");
+                $.ajax({
+                    url: "/api/subscribe/" +id, //insert를 하는 뭔가가 있다.
+                    method: "post",
+                    success: function (response) {
+                        console.log(response);
+                    }
+                })
+            });
     </script>
 </div>
 </html>

@@ -2,7 +2,9 @@ package com.ryan9025.myhomepage.controller;
 
 import com.ryan9025.myhomepage.dto.CustomUserDetails;
 import com.ryan9025.myhomepage.dto.UpdateMemberDto;
+import com.ryan9025.myhomepage.entity.Member;
 import com.ryan9025.myhomepage.service.MemberService;
+import com.ryan9025.myhomepage.service.SubscribeService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -19,9 +21,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequiredArgsConstructor
 public class MemberController {
     private final MemberService memberService;
+    private final SubscribeService subscribeService;
     @GetMapping("/myPage/{id}")
     public String myPage(@PathVariable int id, Model model , @AuthenticationPrincipal CustomUserDetails customUserDetails) {
-        model.addAttribute("memberInfo",customUserDetails.getLoggedMember());
+        //model.addAttribute("memberInfo",customUserDetails.getLoggedMember());
+        Member memberInfo = memberService.getProfile(id);
+        int suscribeCount = subscribeService.subscribeCount(id);
+        model.addAttribute("memberInfo",memberInfo);
+        model.addAttribute("subscribecount",suscribeCount);
         return "/member/myPage";
     }
 

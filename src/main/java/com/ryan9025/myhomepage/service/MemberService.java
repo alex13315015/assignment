@@ -5,6 +5,7 @@ import com.ryan9025.myhomepage.dto.JoinDto;
 import com.ryan9025.myhomepage.dto.UpdateMemberDto;
 import com.ryan9025.myhomepage.entity.Member;
 import com.ryan9025.myhomepage.repository.MemberRepository;
+import com.ryan9025.myhomepage.repository.SubscribeRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.coobird.thumbnailator.Thumbnailator;
@@ -29,6 +30,8 @@ import java.util.UUID;
 public class MemberService {
     private final MemberRepository memberRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final SubscribeRepository subscribeRepository;
+
     @Value("${file.path}")
     private String uploadFolder;
     @Transactional
@@ -64,10 +67,12 @@ public class MemberService {
         String imageFileName = uuid + "_" + profileImageUrl.getOriginalFilename();
         String thumbnailFileName = "thumb_" + imageFileName;
         Path imageFilePath = Paths.get(uploadFolder + imageFileName);
+        File originalFile = new File(uploadFolder + imageFileName);
         try {
             Files.write(imageFilePath,profileImageUrl.getBytes());
-            Thumbnailator.createThumbnail(new File(uploadFolder + imageFileName),
+            Thumbnailator.createThumbnail(originalFile,
                                           new File(uploadFolder + thumbnailFileName), 150,150);
+            originalFile.delete();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -79,5 +84,15 @@ public class MemberService {
             throw new UsernameNotFoundException("등록되지 않은 회원입니다.");
         }
 
+    }
+
+    @Transactional
+    public Member getProfile(int id) {
+        Member memberInfo =
+                memberRepository.findById(id).orElseThrow(
+                        () -> new UsernameNotFoundException("등록되지 않은 회원입니다.")
+                );
+        //int subscribeCount = subscribeRepository.subscribeCount(id);
+        return memberInfo;
     }
 }
