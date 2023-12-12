@@ -7,6 +7,7 @@ import com.ryan9025.myhomepage.entity.Member;
 import com.ryan9025.myhomepage.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import net.coobird.thumbnailator.Thumbnailator;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -60,15 +62,18 @@ public class MemberService {
         log.info("id==={}",id);
         UUID uuid = UUID.randomUUID();
         String imageFileName = uuid + "_" + profileImageUrl.getOriginalFilename();
+        String thumbnailFileName = "thumb_" + imageFileName;
         Path imageFilePath = Paths.get(uploadFolder + imageFileName);
         try {
             Files.write(imageFilePath,profileImageUrl.getBytes());
+            Thumbnailator.createThumbnail(new File(uploadFolder + imageFileName),
+                                          new File(uploadFolder + thumbnailFileName), 150,150);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
         Optional<Member> optionalMember = memberRepository.findById(id); // 엔티티 member 찾아서
         if(optionalMember.isPresent()) {
-            optionalMember.get().setProfileImageUrl(imageFileName); // setter로 update
+            optionalMember.get().setProfileImageUrl(thumbnailFileName); // setter로 update
             return optionalMember.get();
         } else {
             throw new UsernameNotFoundException("등록되지 않은 회원입니다.");
