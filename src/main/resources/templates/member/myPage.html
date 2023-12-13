@@ -24,46 +24,79 @@
                             <a href="" class="btn btn-dark">스토리</a>
                         </th:block>
                         <th:block th:unless="${memberInfo.pageOwner}">
-                            <button class="btn btn-outline-dark" id="btnSubscribe" th:if="${memberInfo.subscribeState}" data-subscribe="cancel">구독취소</button>
-                            <button class="btn btn-outline-dark" id="btnSubscribe" th:unless="${memberInfo.subscribeState}" data-subscribe="confirm">구독하기</button>
+                            <button class="btn btn-outline-dark" id="btnSubscribe"
+                                    th:data-idx="${memberInfo.member.id}"
+                                    th:if="${memberInfo.subscribeState}" data-subscribe="cancel">구독취소</button>
+                            <button class="btn btn-outline-dark" id="btnSubscribe"
+                                    th:data-idx="${memberInfo.member.id}"
+                                    th:unless="${memberInfo.subscribeState}" data-subscribe="confirm">구독하기</button>
                         </th:block>
-                        <button class="btn btn-secondary"
+                        <button class="btn btn-outline-secondary"
                                 data-bs-toggle="modal"
                                 data-bs-target="#menuModal"><i class="bi bi-person-fill-gear"></i>
                         </button>
                     </div>
                     <div class="subscribe mt-3 mb-3">
-                        <span>구독자수</span><span th:text="${memberInfo.subscribeCount}" class="mx-2">3</span>
+                        <button type="button" class="btn btn-primary position-relative" id="btnSubscribeInfo">
+                            구독자수
+                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                <span id="subscribeCount" th:text="${memberInfo.subscribeCount}">99+</span>
+                                <span class="visually-hidden">unread messages</span>
+                            </span>
+                        </button>
                     </div>
                     <div class="title mt-3">
                         <h3 th:text="${memberInfo.member.userID}">ryan9025</h3>
                         <div th:text="${memberInfo.member.description}">자기소개</div>
                     </div>
-                    <!-- Button trigger modal -->
-                    <!-- Modal -->
-                    <div class="modal fade" id="menuModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-body d-grid">
-                                    <a href="/auth/logout" class="btn btn-dark"> 로그아웃 </a>
-                                    <a href="/member/modify/1" th:href="@{/member/modify/{id}(id=${memberInfo.member.id})}" class="btn btn-outline-dark mt-2"> 수정하기 </a>
-                                    <button type="button" class="btn btn-outline-secondary mt-2"
-                                            data-bs-dismiss="modal">닫기</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
     </div>
+
+    <!-- Button trigger modal -->
+    <!-- Modal -->
+    <div class="modal fade" id="menuModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body d-grid">
+                    <a href="/auth/logout" class="btn btn-dark"> 로그아웃 </a>
+                    <a href="/member/modify/1" th:href="@{/member/modify/{id}(id=${memberInfo.member.id})}" class="btn btn-outline-dark mt-2"> 수정하기 </a>
+                    <button type="button" class="btn btn-outline-secondary mt-2"
+                            data-bs-dismiss="modal">닫기</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="subscribeInfoModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="staticBackdropLabel">구독정보</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <ul class="subscribeList">
+                    </ul>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script th:inline="javascript">
+        const subscribeInfoModal = new bootstrap.Modal("#subscribeInfoModal");
+        let subscribeCount = [[${memberInfo.subscribeCount}]];
+
         const id = [[${memberInfo.member.id}]];
         $(".profile").on("click",function () {
             console.log("click");
             $("#profileSelect").trigger("click");
         });
-            $("#profileSelect").on("change",function (e) {
+        $("#profileSelect").on("change",function (e) {
                 console.log(e);
                 const file = e.target.files[0];
                 if(!file.type.match("image.*")) {
@@ -92,11 +125,11 @@
             });
 
 
-            $("body").on("click", "#btnSubscribe",function () {
+        $("body").on("click", "#btnSubscribe",function () {
                 const subscribe = $(this).data("subscribe");
                 const _this = $(this);
+                const id = $(this).data("idx");
                 if(subscribe === "confirm") {
-                    console.log("click");
                     $.ajax({
                         url: "/api/subscribe/" + id, //insert를 하는 뭔가가 있다.
                         method: "post",
@@ -104,6 +137,8 @@
                             console.log(response);
                             _this.data("subscribe","cancel");
                             _this.text("구독취소");
+                            subscribeCount++;
+                            $("#subscribeCount").text(subscribeCount);
                         }
                     })
                 }else {
@@ -114,10 +149,48 @@
                             console.log(response);
                             _this.data("subscribe","confirm");
                             _this.text("구독하기");
-                        }
+                            subscribeCount--;
+                            $("#subscribeCount").text(subscribeCount);
+                    }
                     })
                 }
             })
+
+        $("#btnSubscribeInfo").on("click", function () {
+            subscribeInfoModal.show();
+            $.ajax({
+                url: `/api/member/${id}/subscribe`,
+                success: function (response) {
+                    console.log(response);
+                    let tempHtml = "";
+                    if(response.subscribeList.length === 0) {
+                        tempHtml = "<p>구독하는 사람이 없습니다.</p>"
+                    } else {
+                        $.each(response.subscribeList, function (idx, item) {
+                            const profileImageUrl = item.profileImageUrl;
+                            const name = item.name;
+                            const equalState = item.equalState;
+                            const subscribeState = item.subscribeState;
+                            let btn = "";
+                            if (equalState === "1") {
+                                btn = "";
+                            } else {
+                                if (subscribeState !== "1") {
+                                    btn = `<button class="btn btn-dark" id="btnSubscribe" data-idx="${item.id}">구독하기</button>`;
+                                }
+                                    btn = `<button class="btn btn-dark" id="btnSubscribe" data-idx="${item.id}">`구독취소</button>';
+                            }
+                            tempHtml += `<li>
+                                     <span class="thumb"><img src="/upload/"${profileImageUrl}></span>
+                                     <span class="name">${name}</span>
+                                     ${btn}
+                                     </li>`
+                        });
+                    }
+                    $(".subscribeList").html(tempHtml);
+                }
+            })
+        });
     </script>
 </div>
 </html>
