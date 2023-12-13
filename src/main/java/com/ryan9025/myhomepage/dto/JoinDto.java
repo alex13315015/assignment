@@ -25,5 +25,9 @@ public class JoinDto {
     @Email
     private String email;
 
+    private String phoneNumber;
+    private String mbti;
+    private String description;
+
 
 }

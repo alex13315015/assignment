@@ -44,6 +44,9 @@ public class MemberService {
                 .role(Role.ROLE_USER)
                 .email(joinDto.getEmail())
                 .name(joinDto.getName())
+                .phoneNumber(joinDto.getPhoneNumber())
+                .description(joinDto.getDescription())
+                .mbti(joinDto.getMbti())
                 .build();
         return memberRepository.save(dbJoinMember);
     }
