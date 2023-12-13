@@ -5,7 +5,7 @@
 <div layout:fragment="content" class="main">
     <div class="container d-flex justify-content-center">
         <div class="col-12">
-            <h2 class="mb-5">MY PAGE</h2>
+            <h2 class="mb-3">MY PAGE</h2>
             <div class="myPage-header">
                 <div class="profile">
                     <th:block th:if="${memberInfo.member.profileImageUrl == null}">
@@ -21,7 +21,7 @@
                 <div class="info">
                     <div class="btns">
                         <th:block th:if="${memberInfo.pageOwner}">
-                            <a href="" class="btn btn-dark">스토리</a>
+                            <a href="" class="btn btn-outline-dark">스토리</a>
                         </th:block>
                         <th:block th:unless="${memberInfo.pageOwner}">
                             <button class="btn btn-outline-dark" id="btnSubscribe"
@@ -31,22 +31,24 @@
                                     th:data-idx="${memberInfo.member.id}"
                                     th:unless="${memberInfo.subscribeState}" data-subscribe="confirm">구독하기</button>
                         </th:block>
-                        <button class="btn btn-outline-secondary"
+                        <button class="btn btn-outline-dark"
                                 data-bs-toggle="modal"
                                 data-bs-target="#menuModal"><i class="bi bi-person-fill-gear"></i>
                         </button>
                     </div>
                     <div class="subscribe mt-3 mb-3">
-                        <button type="button" class="btn btn-primary position-relative" id="btnSubscribeInfo">
+                        <button type="button" class="btn btn-outline-dark position-relative" id="btnSubscribeInfo">
                             구독자수
-                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-dark">
                                 <span id="subscribeCount" th:text="${memberInfo.subscribeCount}">99+</span>
                                 <span class="visually-hidden">unread messages</span>
                             </span>
                         </button>
                     </div>
                     <div class="title mt-3">
-                        <h3 th:text="${memberInfo.member.userID}">ryan9025</h3>
+                        <div th:text="${memberInfo.member.name}" style="font-size:30px; font-weight: bold">이름</div>
+                        <div th:text="${memberInfo.member.mbti}" style="font-size: 20px; font-weight: bold">MBTI</div>
+                        <span><소개글></span>
                         <div th:text="${memberInfo.member.description}">자기소개</div>
                     </div>
                 </div>
