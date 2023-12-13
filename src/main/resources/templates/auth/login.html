@@ -4,29 +4,28 @@
             layout:decorate="~{/layout/layout}">
     <div layout:fragment="content" class="main">
         <div class="container d-flex justify-content-center">
-            <div class="col-6">
+            <div class="col-6" style="width: 400px">
                 <h2>로그인</h2>
                     <form action="/auth/login" method="post" th:action="@{/auth/login}">
-                        <div class="mb-3">
+                        <div class=" mt-3 mb-3">
                             <label for="userID" class="form-label">아이디</label>
                             <input type="text" class="form-control" id="userID" name="userID" placeholder="아이디를 입력하세요.">
-                            <p class="error"></p>
                         </div>
                         <div class="mb-3">
                             <label for="password" class="form-label">패스워드</label>
                             <input type="password" class="form-control" id="password" name="password" placeholder="비밀번호를 입력하세요.">
-                            <p class="error"></p>
                         </div>
-                        <div class="mt-2">
-                            <button class="btn btn-dark w-100 py-2 mt-5" type="submit">로그인</button>
-                            <a href="/mail/find-password" class="btn btn-dark w-100 py-2 mt-5">비밀번호찾기</a>
+                        <div class="d-grid mt-5">
+                            <button class="btn btn-dark mt-2" type="submit">로그인</button>
+                            <a class="btn btn-dark mt-2" href="/auth/join">회원가입</a>
+                            <a class="btn btn-dark mt-2" href="/mail/find-password">비밀번호찾기</a>
                         </div>
                     </form>
-                <div class="mt-2">
-                    <a href="/oauth2/authorization/google" class="btn btn-dark w-100 py-2 mt-5">구글로그인</a>
-                    <a href="/oauth2/authorization/naver" class="btn btn-dark w-100 py-2 mt-5">네이버로그인</a>
-                    <a href="/oauth2/authorization/kakao"><img src="/images/kakao_login.png" alt="" class="mt-5"></a>
-                    <a href="/oauth2/authorization/github" class="btn btn-dark w-100 py-2 mt-5">깃허브로그인</a>
+                <div class="mt-5 d-grid">
+                    <a class="btn btn-outline-dark mt-1" href="/oauth2/authorization/google">구글로그인</a>
+                    <a class="btn btn-outline-dark mt-1" href="/oauth2/authorization/naver">네이버로그인</a>
+                    <a class="btn btn-outline-dark mt-1" href="/oauth2/authorization/kakao">카카오로그인</a>
+                    <a class="btn btn-outline-dark mt-1" href="/oauth2/authorization/github">깃허브로그인</a>
                 </div>
             </div>
         </div>
