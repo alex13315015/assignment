@@ -90,8 +90,8 @@
     <script th:inline="javascript">
         const subscribeInfoModal = new bootstrap.Modal("#subscribeInfoModal");
         let subscribeCount = [[${memberInfo.subscribeCount}]];
-
         const id = [[${memberInfo.member.id}]];
+
         $(".profile").on("click",function () {
             console.log("click");
             $("#profileSelect").trigger("click");
@@ -151,7 +151,7 @@
                             _this.text("구독하기");
                             subscribeCount--;
                             $("#subscribeCount").text(subscribeCount);
-                    }
+                        }
                     })
                 }
             })
@@ -178,7 +178,7 @@
                                 if (subscribeState !== "1") {
                                     btn = `<button class="btn btn-dark" id="btnSubscribe" data-idx="${item.id}">구독하기</button>`;
                                 }
-                                    btn = `<button class="btn btn-dark" id="btnSubscribe" data-idx="${item.id}">`구독취소</button>';
+                                    btn = `<button class="btn btn-dark" id="btnSubscribe" data-idx="${item.id}">구독취소</button>`;
                             }
                             tempHtml += `<li>
                                      <span class="thumb"><img src="/upload/"${profileImageUrl}></span>
