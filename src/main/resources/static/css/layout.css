@@ -14,3 +14,26 @@
   width: 200px;
   height: 200px;
 }
+#memberProfileImage {
+  width:150px;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 300px;
+  border: 5px solid #ccc;
+}
+.subscribeList li {
+  display: flex;
+  align-items: center;
+  margin:10px 0;
+}
+.subscribeList li .thumb {
+  width:60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 100px;
+  overflow: hidden;
+  margin-right: 20px;
+}
+.subscribeList li .btn {
+  margin-left: auto;
+}
