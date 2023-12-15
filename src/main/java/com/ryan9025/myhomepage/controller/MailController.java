@@ -22,7 +22,7 @@ public class MailController {
     }
     @PostMapping("/send")
     public String sendMail(@ModelAttribute MailDto mailDto) {
-
+        mailService.sendMail(mailDto);
         return "redirect:/";
     }
     @GetMapping("find-password")
@@ -30,4 +30,8 @@ public class MailController {
         return "/mail/find-password";
     }
 
+    @PostMapping("find-password")
+    public String findPasswordProcess() {
+        return null;
+    }
 }
