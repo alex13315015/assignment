@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/layout/layout}">
+<div layout:fragment="content" class="main">
+    <div class="container justify-content-center d-flex">
+        <div class="col-12">
+            <h2>나의 피드</h2>
+            <!-- 내가 구독하고 있는 사람들이 올려놓은 story를 여기다가 뿌릴 예정 -->
+            <!-- 구독자 정보를 알아야 하고 그 사람이 올린 story를 가져옴 -->
+            <div class="story-list-box">
+                <ul class="feed-list">
+                </ul>
+                <div class="d-flex justify-content-center">
+                <button class="btn btn-outline-dark btn-more mt-5">더보기</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script th:inline="javascript">
+        let loadPage = 0;
+        loadStory();
+        let totalPages = 0;
+        function loadStory () {
+            $.ajax({
+                url: `/api/image?page=${loadPage}`,
+                success: function (response) {
+                    console.log(response);
+                    let tempHtml = "";
+                    totalPages = response.imageList.totalPages - 1;
+                    $.each(response.imageList.content, function (idx,item) {
+                        tempHtml += `<li>
+                        <div class="story-box mt-5">
+                            <div class="mypage-header">
+                                <img src="/upload/${item.member.profileImageUrl}" alt="">
+                                <span>${item.member.name}</span>
+                            </div>
+                            <div class="main-image">
+                                <img src="/upload/${item.imageUrl}">
+                            </div>
+                            <div class="caption">${item.caption}</div>
+                            <div class="mb-3 comment-box">
+                                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                                <button class="btn btn-outline-primary mt-2">comment</button>
+                            </div>
+                        </div>
+                    </li>
+                    `
+                    });
+                    $(".feed-list").append(tempHtml);
+                }
+            });
+        }
+        $(".btn-more").on("click",function () {
+            loadPage++;
+            if(loadPage >= totalPages) {
+                $(this).hide();
+            }
+            loadStory();
+        });
+        $(window).on("scroll",function () {
+            console.log("$(window).height()===",$(window).height());
+            console.log("$(document).height()===",$(document).height());
+            console.log("$(window).scrollTop()===",$(window).scrollTop());
+            const wh = $(window).height();
+            const dh = $(document).height();
+            const st = $(window).scrollTop();
+            if(wh + st >= dh - 100) {
+                loadPage++;
+                loadStory();
+                if(loadPage >= totalPages) {
+                    $(window).off("scroll");
+                }
+            }
+        });
+    </script>
+</div>
+</html>
