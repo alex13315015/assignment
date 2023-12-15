@@ -16,9 +16,9 @@
         </div>
         <div sec:authorize="isAuthenticated()">
             <ul class="nav nav-pills">
-                <li class="mx-2"><a href="" class="fs-4 text-dark"><i class="bi bi-house-heart" style="font-size: 2rem"></i></a></li>
+                <li class="mx-2"><a href="/image/feed" class="fs-4 text-dark"><i class="bi bi-house-heart" style="font-size: 2rem"></i></a></li>
                 <li class="mx-2"><a href="/member/myPage"
-                       th:href="@{member/myPage/{id}(id=${#authentication.principal.loggedMember.id})}" class="fs-4 text-dark"><i class="bi bi-person-fill-check" style="font-size: 2rem"></i></a></li>
+                       th:href="@{/member/myPage/{id}(id=${#authentication.principal.loggedMember.id})}" class="fs-4 text-dark"><i class="bi bi-person-fill-check" style="font-size: 2rem"></i></a></li>
             </ul>
         </div>
     </header>
