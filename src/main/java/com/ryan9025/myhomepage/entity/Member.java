@@ -1,6 +1,7 @@
 package com.ryan9025.myhomepage.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.ryan9025.myhomepage.constant.Role;
 import jakarta.persistence.*;
 import lombok.*;
@@ -50,7 +51,9 @@ public class Member {
 
     private String profileImageUrl;
 
-    @OneToMany(mappedBy = "member")
+    //양방향 매핑...
+    @JsonIgnoreProperties({"member"})
+    @OneToMany(mappedBy = "member") // 원래대로라면 column이 만들어지지만 내가 main 테이블이 아니니까 만들지마라!
     private List<Image> imageList;
 
     @CreatedDate
