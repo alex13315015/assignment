@@ -15,7 +15,7 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain (HttpSecurity httpSecurity) throws Exception {
         httpSecurity.authorizeHttpRequests((auth) -> auth
-                        .requestMatchers("/","/auth/join","/auth/login","/css/**","/js/**","/images/**")
+                        .requestMatchers("/","/auth/join","/auth/login","/mail/**","/css/**","/js/**","/images/**")
                         .permitAll()
                         .anyRequest()
                         .authenticated())
@@ -24,7 +24,7 @@ public class SecurityConfig {
                         .usernameParameter("userID")
                         .passwordParameter("password")
                         .loginProcessingUrl("/auth/login")
-                        .defaultSuccessUrl("/image/story",true)
+                        .defaultSuccessUrl("/image/feed",true)
                         .permitAll()
                 )
                 .logout((logout) -> logout
