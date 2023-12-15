@@ -52,6 +52,15 @@
                         <div th:text="${memberInfo.member.description}">자기소개</div>
                     </div>
                 </div>
+                <div class="story-list">
+                    <ul>
+                        <th:block th:each="item:${memberInfo.member.imageList}">
+                            <li>
+                                <img src="/images/star.png" th:src="@{|/upload/${item.imageUrl}|}">
+                            </li>
+                        </th:block>
+                    </ul>
+                </div>
             </div>
         </div>
     </div>
@@ -183,7 +192,7 @@
                                     btn = `<button class="btn btn-dark" id="btnSubscribe" data-idx="${item.id}">구독취소</button>`;
                             }
                             tempHtml += `<li>
-                                     <span class="thumb"><img src="/upload/"${profileImageUrl}></span>
+                                     <span ><img src="/upload/${profileImageUrl}" class="thumb"></span>
                                      <span class="name">${name}</span>
                                      ${btn}
                                      </li>`
