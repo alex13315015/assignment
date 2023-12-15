@@ -24,7 +24,7 @@ public class SecurityConfig {
                         .usernameParameter("userID")
                         .passwordParameter("password")
                         .loginProcessingUrl("/auth/login")
-                        .defaultSuccessUrl("/",true)
+                        .defaultSuccessUrl("/image/story",true)
                         .permitAll()
                 )
                 .logout((logout) -> logout
