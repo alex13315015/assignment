@@ -19,7 +19,6 @@ import java.time.LocalDateTime;
 public class Image {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Column(name = "image_id")
     private int id;
 
     private String caption;
