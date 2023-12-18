@@ -29,16 +29,28 @@
                     let tempHtml = "";
                     totalPages = response.imageList.totalPages - 1;
                     $.each(response.imageList.content, function (idx,item) {
-                        tempHtml += `<li>
+                        tempHtml += `
+                    <li>
                         <div class="story-box mt-5">
                             <div class="mypage-header">
                                 <img src="/upload/${item.member.profileImageUrl}" alt="">
                                 <span>${item.member.name}</span>
                             </div>
+                            <!-- 상단 글 작성자 정보 -->
                             <div class="main-image">
-                                <img src="/upload/${item.imageUrl}">
+                                <img src="/upload/${item.imageUrl}" style="width: 200px;height: 200px">
                             </div>
+                            <!-- 이미지 불러오는 곳 -->
                             <div class="caption">${item.caption}</div>
+                            <!-- 제목 -->
+                            <div class="like-box">
+                                <span class="heart-icon">
+                                    <i class="bi bi-heart"></i>
+                                    <i class="bi bi-suit-heart-fill"></i>
+                                </span>
+                                <span class="heart-num">7</span>
+                            </div>
+                            <!-- 좋아요 -->
                             <div class="mb-3 comment-box">
                                 <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
                                 <button class="btn btn-outline-primary mt-2">comment</button>
