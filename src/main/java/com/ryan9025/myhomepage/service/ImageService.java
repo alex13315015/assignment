@@ -41,6 +41,15 @@ public class ImageService {
         imageRepository.save(image);
     }
     public Page<Image> loadStory(int customDetailsID, Pageable pageable) {
-     return imageRepository.loadStory(customDetailsID,pageable);
+        Page<Image> images = imageRepository.loadStory(customDetailsID,pageable);
+        images.forEach((image) -> {
+            image.setLikeTotal(image.getLikes().size());
+            image.getLikes().forEach((like) -> {
+                if(like.getMember().getId() == customDetailsID) {
+                    image.setLikeState(true);
+                }
+            });
+        });
+     return images;
     }
 }
