@@ -11,6 +11,10 @@ import org.springframework.stereotype.Repository;
 public interface LikesRepository extends JpaRepository<Likes,Integer> {
     @Modifying
     @Query(value = "INSERT INTO LIKES(id,imageID,memberID,createDate) " +
-            "VALUES(LIKES_SEQ.nextval, :imageID, :customerDetailsID, sysdate)", nativeQuery = true)
-    int like(@Param("imageID") int imageID, @Param("customerDetailsID") int customerDetailsID);
+            "VALUES(LIKES_SEQ.nextval, :imageID, :customDetailsID, sysdate)", nativeQuery = true)
+    int like(@Param("imageID") int imageID, @Param("customDetailsID") int customDetailsID);
+
+    @Modifying
+    @Query(value = "DELETE FROM LIKES WHERE imageID = :imageID AND memberID = :customDetailsID", nativeQuery = true)
+    int hate(@Param("imageID") int imageID, @Param("customDetailsID") int customDetailsID);
 }

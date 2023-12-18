@@ -13,8 +13,8 @@ public class LikesService {
     private final LikesRepository likesRepository;
 
     @Transactional
-    public int like(int imageID,int customerDetailsID) {
-        int result = likesRepository.like(imageID,customerDetailsID);
+    public int like(int imageID,int customDetailsID) {
+        int result = likesRepository.like(imageID,customDetailsID);
         return result;
     }
 }
