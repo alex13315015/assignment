@@ -1,5 +1,6 @@
 package com.ryan9025.myhomepage.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
@@ -27,10 +28,19 @@ public class Image {
 
     @JoinColumn(name = "member_id")
     @ManyToOne
+    @JsonIgnoreProperties({"imageList"})
     private Member member;
 
     @OneToMany(mappedBy = "image")
+    @JsonIgnoreProperties({"image"})
     private List<Likes> likes;
+
+    //좋아요 상태를 나타내기 위해!
+    @Transient // 컬럼생성을 막는!!
+    private boolean likeState;
+
+    @Transient
+    private int likeTotal;
 
     @CreatedDate
     private LocalDateTime createDate;
