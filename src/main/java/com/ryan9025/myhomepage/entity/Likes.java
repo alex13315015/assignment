@@ -1,5 +1,6 @@
 package com.ryan9025.myhomepage.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
@@ -27,6 +28,7 @@ public class Likes {
 
     @ManyToOne
     @JoinColumn(name = "memberID")
+    @JsonIgnoreProperties({"imageList"})
     private Member member;
 
     @CreatedDate
