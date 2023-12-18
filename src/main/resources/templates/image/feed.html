@@ -29,8 +29,9 @@
                     let tempHtml = "";
                     totalPages = response.imageList.totalPages - 1;
                     $.each(response.imageList.content, function (idx,item) {
+                        const likeState = item.likeState;
                         tempHtml += `
-                    <li>
+                    <li data-image="${item.id}">
                         <div class="story-box mt-5">
                             <div class="mypage-header">
                                 <img src="/upload/${item.member.profileImageUrl}" alt="">
@@ -44,11 +45,11 @@
                             <div class="caption p-3 fs-4 fw-bold">${item.caption}</div>
                             <!-- 제목 -->
                             <div class="like-box p-3">
-                                <span class="like-icon" data-state="hate">
-                                <i class="bi bi-heart fs-4"></i>
-                                <!-- <i class="bi bi-heart-fill text-danger fs-3"></i> -->
+                                <span class="like-icon" data-state=${likeState?"like" : "hate"}>
+                                <i class="bi ${likeState?"bi bi-heart-fill text-danger" : "bi-heart"} fs-4"></i>
+                                <!-- <i class=" fs-3"></i> -->
                                 </span>
-                                <span class="like-num">7</span>
+                                <span class="like-num">${item.likeTotal}</span>
                             </div>
                             <!-- 좋아요 -->
                             <div class="mb-3 comment-box p-3">
@@ -66,27 +67,41 @@
 
         $("body").on("click",".like-icon",function () {
             //console.log("좋아요!!");
+            const selectedImage = $(this).closest("li").data("image");
             const heart = $(this).find("i");
-            if($(this).data("state") == "hate") {
+            const _this = $(this);
+            const _num = $(this).next();
+            let num = parseInt(_num.text());
+            if($(this).data("state") == "like") {
                 $.ajax ({
-                    url: "/api/image/152/likes",
+                    url: `/api/image/${selectedImage}/likes`,
+                    method: "delete",
+                    success:function (response) {
+                        console.log(response);
+                        _this.data("state", "hate");
+                        heart.removeClass("bi bi-heart-fill");
+                        heart.removeClass("text-danger");
+                        heart.addClass("bi bi-heart");
+                        num--;
+                        _num.text(num);
+                    }
+                });
+            } else {
+                $.ajax ({
+                    url: `/api/image/${selectedImage}/likes`,
                     method: "post",
                     success:function (response) {
                         console.log(response);
+                        _this.data("state", "like");
+                        heart.removeClass("bi bi-heart");
+                        heart.addClass("bi bi-heart-fill");
+                        heart.addClass("text-danger");
+                        num++;
+                        _num.text(num);
                     }
                 });
-                $(this).data("state", "like");
-                heart.removeClass("bi bi-heart");
-                heart.addClass("bi bi-heart-fill");
-                heart.addClass("text-danger");
-            } else {
-                $(this).data("state", "hate");
-                heart.removeClass("bi bi-heart-fill");
-                heart.removeClass("text-danger");
-                heart.addClass("bi bi-heart");
             }
         });
-
 
         $(".btn-more").on("click",function () {
             loadPage++;
