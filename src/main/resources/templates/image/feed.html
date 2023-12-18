@@ -41,17 +41,17 @@
                                 <img src="/upload/${item.imageUrl}" style="width: 200px;height: 200px">
                             </div>
                             <!-- 이미지 불러오는 곳 -->
-                            <div class="caption">${item.caption}</div>
+                            <div class="caption p-3 fs-4 fw-bold">${item.caption}</div>
                             <!-- 제목 -->
-                            <div class="like-box">
-                                <span class="heart-icon">
-                                    <i class="bi bi-heart"></i>
-                                    <i class="bi bi-suit-heart-fill"></i>
+                            <div class="like-box p-3">
+                                <span class="like-icon" data-state="hate">
+                                <i class="bi bi-heart fs-4"></i>
+                                <!-- <i class="bi bi-heart-fill text-danger fs-3"></i> -->
                                 </span>
-                                <span class="heart-num">7</span>
+                                <span class="like-num">7</span>
                             </div>
                             <!-- 좋아요 -->
-                            <div class="mb-3 comment-box">
+                            <div class="mb-3 comment-box p-3">
                                 <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
                                 <button class="btn btn-outline-primary mt-2">comment</button>
                             </div>
@@ -63,6 +63,31 @@
                 }
             });
         }
+
+        $("body").on("click",".like-icon",function () {
+            //console.log("좋아요!!");
+            const heart = $(this).find("i");
+            if($(this).data("state") == "hate") {
+                $.ajax ({
+                    url: "/api/image/152/likes",
+                    method: "post",
+                    success:function (response) {
+                        console.log(response);
+                    }
+                });
+                $(this).data("state", "like");
+                heart.removeClass("bi bi-heart");
+                heart.addClass("bi bi-heart-fill");
+                heart.addClass("text-danger");
+            } else {
+                $(this).data("state", "hate");
+                heart.removeClass("bi bi-heart-fill");
+                heart.removeClass("text-danger");
+                heart.addClass("bi bi-heart");
+            }
+        });
+
+
         $(".btn-more").on("click",function () {
             loadPage++;
             if(loadPage >= totalPages) {
