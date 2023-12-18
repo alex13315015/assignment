@@ -7,6 +7,7 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Getter
@@ -28,9 +29,14 @@ public class Image {
     @ManyToOne
     private Member member;
 
+    @OneToMany(mappedBy = "image")
+    private List<Likes> likes;
+
     @CreatedDate
     private LocalDateTime createDate;
 
     @LastModifiedDate
     private LocalDateTime modifyDate;
+
+
 }
