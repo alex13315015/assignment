@@ -17,4 +17,10 @@ public class LikesService {
         int result = likesRepository.like(imageID,customDetailsID);
         return result;
     }
+
+    @Transactional
+    public int hate(int imageID,int customDetailsID) {
+        int result = likesRepository.hate(imageID,customDetailsID);
+        return result;
+    }
 }
