@@ -35,6 +35,11 @@ public class Image {
     @JsonIgnoreProperties({"image"})
     private List<Likes> likes;
 
+    @OrderBy("createDate DESC , id ASC")
+    @OneToMany(mappedBy = "image")
+    @JsonIgnoreProperties({"image"})
+    private List<Comments> commentsList;
+
     //좋아요 상태를 나타내기 위해!
     @Transient // 컬럼생성을 막는!!
     private boolean likeState;
@@ -47,6 +52,7 @@ public class Image {
 
     @LastModifiedDate
     private LocalDateTime modifyDate;
+
 
 
 }
