@@ -1,5 +1,6 @@
 package com.ryan9025.myhomepage.config;
 
+import com.ryan9025.myhomepage.service.CustomUserDetailsService;
 import com.ryan9025.myhomepage.service.OAuth2DetailsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -8,10 +9,13 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
+import java.util.UUID;
+
 @Configuration
 @RequiredArgsConstructor
 public class SecurityConfig {
     private final OAuth2DetailsService oAuth2DetailsService;
+    private final CustomUserDetailsService customUserDetailsService;
     @Bean
     public SecurityFilterChain filterChain (HttpSecurity httpSecurity) throws Exception {
         httpSecurity.authorizeHttpRequests((auth) -> auth
@@ -31,6 +35,12 @@ public class SecurityConfig {
                         .logoutRequestMatcher(new AntPathRequestMatcher("/auth/logout"))
                         .logoutSuccessUrl("/auth/login")
                         .invalidateHttpSession(true)
+                )
+                .rememberMe((auth) -> auth
+                        .rememberMeParameter("saveMe")
+                        .key(UUID.randomUUID().toString())
+                        .userDetailsService(customUserDetailsService)
+                        .tokenValiditySeconds(60*60*24*30)
                 )
                 .oauth2Login((oauth2Login) -> oauth2Login
                         .loginPage("/auth/login")
