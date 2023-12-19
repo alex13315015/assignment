@@ -21,6 +21,8 @@
         let loadPage = 0;
         loadStory();
         let totalPages = 0;
+
+        const loggedID = [[${#authentication.principal.loggedMember.id}]];
         function loadStory () {
             $.ajax({
                 url: `/api/image?page=${loadPage}`,
@@ -30,6 +32,16 @@
                     totalPages = response.imageList.totalPages - 1;
                     $.each(response.imageList.content, function (idx,item) {
                         const likeState = item.likeState;
+                        let commentsList = "";
+                        $.each(item.commentsList,function (idx02, item02) {
+                            commentsList +=`
+                            <li class="d-flex mb-1" data-idx="${item02.id}">
+                                <span class="profile-image"><img src="/upload/${item02.member.profileImageUrl}"></span>
+                                <span class="writer mx-1">${item02.member.name}</span>
+                                <span class="content mx-2">${item02.content}</span>
+                                ${item02.member.id == loggedID ? `<button class="btn btn-close btn-sm"></button>` : ``}
+                            </li>`
+                        })
                         tempHtml += `
                     <li data-image="${item.id}">
                         <div class="story-box mt-5">
@@ -52,9 +64,14 @@
                                 <span class="like-num">${item.likeTotal}</span>
                             </div>
                             <!-- 좋아요 -->
+                            <div class="comment-list-box p-3">
+                                <ul class="comment-list">
+                                    ${commentsList}
+                                </ul>
+                            </div>
                             <div class="mb-3 comment-box p-3">
                                 <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-                                <button class="btn btn-outline-primary mt-2">comment</button>
+                                <button class="btn btnComment btn-dark mt-2">댓글작성</button>
                             </div>
                         </div>
                     </li>
@@ -65,6 +82,47 @@
             });
         }
 
+        $("body").on("click",".comment-list li .btn-close", function () {
+            //console.log("댓글 삭제!!");
+            const _parent = $(this).parent();
+            const idx = _parent.data("idx");
+            $.ajax({
+                url: `/api/comment/${idx}`,
+                method: "DELETE",
+                success: function (response) {
+                    if(response.deleteComment == "OK") {
+                        _parent.remove();
+                    }
+                }
+            })
+        });
+        $("body").on("click",".comment-box .btnComment", function () {
+            //console.log("댓글 달렸음!!");
+            const imageID = $(this).closest("li").data("image");
+            const comment = $(this).prev().val();
+            const sendData = {
+                content: comment,
+                imageID: imageID
+            }
+            $.ajax({
+                url: "/api/comment",
+                method: "POST",
+                data: sendData,
+                success: function (response) {
+                    console.log(response);
+                    if(response.insertComment == "OK") {
+                        const insertItem = `
+                            <li class="d-flex mb-1" data-idx="${response.comments.id}">
+                                <span class="profile-image"><img src="/upload/${response.comments.member.profileImageUrl}"></span>
+                                <span class="writer mx-1">${response.comments.member.name}</span>
+                                <span class="content mx-2">${response.comments.content}</span>
+                                <button class="btn btn-close btn-sm"></button>
+                            </li>`;
+                        $(".comment-list").prepend(insertItem);
+                    }
+                }
+            });
+        });
         $("body").on("click",".like-icon",function () {
             //console.log("좋아요!!");
             const selectedImage = $(this).closest("li").data("image");
@@ -75,7 +133,7 @@
             if($(this).data("state") == "like") {
                 $.ajax ({
                     url: `/api/image/${selectedImage}/likes`,
-                    method: "delete",
+                    method: "DELETE",
                     success:function (response) {
                         console.log(response);
                         _this.data("state", "hate");
@@ -89,7 +147,7 @@
             } else {
                 $.ajax ({
                     url: `/api/image/${selectedImage}/likes`,
-                    method: "post",
+                    method: "POST",
                     success:function (response) {
                         console.log(response);
                         _this.data("state", "like");
@@ -111,9 +169,9 @@
             loadStory();
         });
         $(window).on("scroll",function () {
-            console.log("$(window).height()===",$(window).height());
-            console.log("$(document).height()===",$(document).height());
-            console.log("$(window).scrollTop()===",$(window).scrollTop());
+            //console.log("$(window).height()===",$(window).height());
+            //console.log("$(document).height()===",$(document).height());
+            //console.log("$(window).scrollTop()===",$(window).scrollTop());
             const wh = $(window).height();
             const dh = $(document).height();
             const st = $(window).scrollTop();
