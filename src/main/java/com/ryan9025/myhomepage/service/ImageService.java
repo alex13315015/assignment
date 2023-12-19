@@ -40,10 +40,11 @@ public class ImageService {
         Image image = imageUploadDto.toEntity(imageFileName,customUserDetails.getLoggedMember());
         imageRepository.save(image);
     }
-    public Page<Image> loadStory(int customDetailsID, Pageable pageable) {
-        Page<Image> images = imageRepository.loadStory(customDetailsID,pageable);
+    public Page<Image> loadFeed(int customDetailsID, Pageable pageable) {
+        Page<Image> images = imageRepository.loadFeed(customDetailsID,pageable);
         images.forEach((image) -> {
             image.setLikeTotal(image.getLikes().size());
+            log.info("image.getLikes().size()==={}",image.getLikes().size());
             image.getLikes().forEach((like) -> {
                 if(like.getMember().getId() == customDetailsID) {
                     image.setLikeState(true);

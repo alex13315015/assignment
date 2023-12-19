@@ -6,10 +6,10 @@
     <div class="container justify-content-center d-flex">
         <div class="col-12">
             <h2>나의 피드</h2>
-            <!-- 내가 구독하고 있는 사람들이 올려놓은 story를 여기다가 뿌릴 예정 -->
-            <!-- 구독자 정보를 알아야 하고 그 사람이 올린 story를 가져옴 -->
-            <div class="story-list-box">
-                <ul class="feed-list">
+            <!-- 내가 구독하고 있는 사람들이 올려놓은 feed를 여기다가 뿌릴 예정 -->
+            <!-- 구독자 정보를 알아야 하고 그 사람이 올린 feed를 가져옴 -->
+            <div class="feed-list-box">
+                <ul class="others-feed-list">
                 </ul>
                 <div class="d-flex justify-content-center">
                 <button class="btn btn-outline-dark btn-more mt-5">더보기</button>
@@ -19,11 +19,11 @@
     </div>
     <script th:inline="javascript">
         let loadPage = 0;
-        loadStory();
+        loadFeed();
         let totalPages = 0;
 
         const loggedID = [[${#authentication.principal.loggedMember.id}]];
-        function loadStory () {
+        function loadFeed () {
             $.ajax({
                 url: `/api/image?page=${loadPage}`,
                 success: function (response) {
@@ -44,17 +44,17 @@
                         })
                         tempHtml += `
                     <li data-image="${item.id}">
-                        <div class="story-box mt-5">
-                            <div class="mypage-header">
+                        <div class="feed-box mt-5">
+                            <div class="myPage-header">
                                 <img src="/upload/${item.member.profileImageUrl}" alt="">
                                 <span>${item.member.name}</span>
                             </div>
                             <!-- 상단 글 작성자 정보 -->
                             <div class="main-image">
-                                <img src="/upload/${item.imageUrl}" style="width: 200px;height: 200px">
+                                <img src="/upload/${item.imageUrl}">
                             </div>
                             <!-- 이미지 불러오는 곳 -->
-                            <div class="caption p-3 fs-4 fw-bold">${item.caption}</div>
+                            <div class="caption p-3 fs-4 fw-bold">${item.caption==null ? "" : item.caption}</div>
                             <!-- 제목 -->
                             <div class="like-box p-3">
                                 <span class="like-icon" data-state=${likeState?"like" : "hate"}>
@@ -77,7 +77,7 @@
                     </li>
                     `
                     });
-                    $(".feed-list").append(tempHtml);
+                    $(".others-feed-list").append(tempHtml);
                 }
             });
         }
@@ -98,8 +98,11 @@
         });
         $("body").on("click",".comment-box .btnComment", function () {
             //console.log("댓글 달렸음!!");
+            const commentList = $(this).parent().prev().find(".comment-list");
+
             const imageID = $(this).closest("li").data("image");
             const comment = $(this).prev().val();
+            const commentBox = $(this).prev();
             const sendData = {
                 content: comment,
                 imageID: imageID
@@ -118,7 +121,8 @@
                                 <span class="content mx-2">${response.comments.content}</span>
                                 <button class="btn btn-close btn-sm"></button>
                             </li>`;
-                        $(".comment-list").prepend(insertItem);
+                        commentList.prepend(insertItem);
+                        commentBox.val("");
                     }
                 }
             });
@@ -166,7 +170,7 @@
             if(loadPage >= totalPages) {
                 $(this).hide();
             }
-            loadStory();
+            loadFeed();
         });
         $(window).on("scroll",function () {
             //console.log("$(window).height()===",$(window).height());
@@ -177,9 +181,10 @@
             const st = $(window).scrollTop();
             if(wh + st >= dh - 100) {
                 loadPage++;
-                loadStory();
+                loadFeed();
                 if(loadPage >= totalPages) {
                     $(window).off("scroll");
+                    $(".btn-more").hide();
                 }
             }
         });

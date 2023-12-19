@@ -7,7 +7,7 @@
         <div class="col-12">
             <h2 class="mb-3">MY PAGE</h2>
             <div class="myPage-header">
-                <div class="profile">
+                <div class="profile mb-2">
                     <th:block th:if="${memberInfo.member.profileImageUrl == null}">
                     <i class="bi bi-person-circle" style="font-size: 100px"></i>
                     </th:block>
@@ -52,7 +52,7 @@
                         <div th:text="${memberInfo.member.description}">자기소개</div>
                     </div>
                 </div>
-                <div class="story-list mypage-story-list">
+                <div class="feed-list myPage-feed-list">
                     <ul>
                         <th:block th:each="item:${memberInfo.member.imageList}">
                             <li>
@@ -61,7 +61,7 @@
                                     <span class="like-icon">
                                             <i class="bi bi-heart-fill text-white fs-3"></i>
                                     </span>
-                                    <span class="text-white fs-3" th:text="${item.likeTotal}">7</span>
+                                    <span class="text-white fs-3" th:text="${item.likeTotal}"></span>
                                 </div>
                             </li>
                         </th:block>
@@ -127,7 +127,7 @@
                 $.ajax({
                     url: `/api/member/${id}/profileImageUrl`,
                     data: formData,
-                    method: "put",
+                    method: "PUT",
                     contentType: false, // x-www-form-urlencode로 되는거 막기
                     processData: false, // query string으로 parsing 되는거 막기
                     success: function (response) {
@@ -149,7 +149,7 @@
                 if(subscribe === "confirm") {
                     $.ajax({
                         url: "/api/subscribe/" + id, //insert를 하는 뭔가가 있다.
-                        method: "post",
+                        method: "POST",
                         success: function (response) {
                             console.log(response);
                             _this.data("subscribe","cancel");
@@ -161,7 +161,7 @@
                 }else {
                     $.ajax({
                         url: "/api/subscribe/" + id,
-                        method: "delete",
+                        method: "DELETE",
                         success: function (response) {
                             console.log(response);
                             _this.data("subscribe","confirm");
@@ -198,8 +198,8 @@
                                     btn = `<button class="btn btn-dark" id="btnSubscribe" data-idx="${item.id}">구독취소</button>`;
                             }
                             tempHtml += `<li>
-                                     <span ><img src="/upload/${profileImageUrl}" class="thumb"></span>
-                                     <span class="name">${name}</span>
+                                     <span><img src="/upload/${profileImageUrl}" class="thumb"></span>
+                                     <a href="/"><span class="name">${name}</span></a>
                                      ${btn}
                                      </li>`
                         });

@@ -21,12 +21,12 @@ public class ImageApiController {
     private final ImageService imageService;
     private final LikesService likesService;
     @GetMapping("/image")
-    public Map<String,Object> loadStory(
+    public Map<String,Object> loadFeed(
             @AuthenticationPrincipal CustomUserDetails customUserDetails,
             @PageableDefault(size = 3) Pageable pageable
             ) {
         Map<String,Object> resultMap = new HashMap<>();
-        Page<Image> imageList = imageService.loadStory(customUserDetails.getLoggedMember().getId(),pageable);
+        Page<Image> imageList = imageService.loadFeed(customUserDetails.getLoggedMember().getId(),pageable);
         resultMap.put("imageList",imageList);
         return resultMap;
     }

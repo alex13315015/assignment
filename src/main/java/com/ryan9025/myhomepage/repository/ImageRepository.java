@@ -14,5 +14,5 @@ public interface ImageRepository extends JpaRepository<Image,Integer> {
     @Query(value = "SELECT * FROM IMAGE i WHERE MEMBER_ID IN" +
             " (SELECT TOMEMBERID FROM SUBSCRIBE WHERE FROMMEMBERID = :customerDetailsID)"
             , nativeQuery = true)
-    Page<Image> loadStory(@Param("customerDetailsID") int customerDetailsID, Pageable pageable);
+    Page<Image> loadFeed(@Param("customerDetailsID") int customerDetailsID, Pageable pageable);
 }
