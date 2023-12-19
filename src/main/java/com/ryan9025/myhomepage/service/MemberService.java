@@ -105,6 +105,14 @@ public class MemberService {
         memberProfileDto.setSubscribeCount(subscribeCount);
         memberProfileDto.setSubscribeState(subscribeState >= 1);
         memberProfileDto.setLikeTotal(memberInfo.getImageList().size());
+
+        memberInfo.getImageList().forEach((image)->{
+            log.info("image.getLikes().size()==={}",image.getLikes().size());
+            image.setLikeTotal(image.getLikes().size());
+        });
+        //memberProfileDto.setLikeTotal();
         return memberProfileDto;
     }
+
 }
+
