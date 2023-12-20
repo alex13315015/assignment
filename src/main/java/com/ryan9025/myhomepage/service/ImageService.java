@@ -6,6 +6,7 @@ import com.ryan9025.myhomepage.entity.Image;
 import com.ryan9025.myhomepage.repository.ImageRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.dialect.unique.CreateTableUniqueDelegate;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -56,5 +57,12 @@ public class ImageService {
 
     public Page<Image> popular(Pageable pageable) {
         return imageRepository.popular(pageable);
+    }
+    public Image loadSingle(int id) {
+        Image imageInfo = imageRepository.findById(id).orElseThrow(
+                () -> new RuntimeException("없는 페이지 입니다.")
+        );
+        imageInfo.setLikeTotal(imageInfo.getLikes().size());
+        return imageInfo;
     }
 }

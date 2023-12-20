@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/layout/layout}">
+<div layout:fragment="content" class="main">
+    <div class="container justify-content-center d-flex">
+        <div class="col-12">
+                <div class="feed-box mt-5">
+                    <div class="myPage-header">
+                        <img src="/images/star.png" th:src="@{|/upload/${imageInfo.member.profileImageUrl}|}" alt="">
+                        <span th:text="${imageInfo.member.name}"></span>
+                    </div>
+                    <div class="main-image">
+                        <img src="" th:src="@{|/upload/${imageInfo.imageUrl}|}">
+                    </div>
+                    <div class="caption p-3 fs-4 fw-bold" th:text="${imageInfo.caption}"></div>
+                    <!-- 제목 -->
+                    <div class="like-box p-3">
+                        <span class="like-icon" data-state="like">
+                        <i class="bi bi-heart-fill text-danger fs-3"></i>
+                        </span>
+                        <span class="like-num"></span>
+                    </div>
+                    <!-- 좋아요 -->
+                    <div class="comment-list-box p-3" th:data-image="${imageInfo.id}" id="comment_image">
+                        <ul class="comment-list">
+                            <th:block th:each="item : ${imageInfo.commentsList}">
+                                <li class="d-flex mb-1" th:data-idx="${item.id}">
+                                    <span class="profile-image">
+                                        <img src="" th:src="@{|/upload/${item.member.profileImageUrl}|}">
+                                    </span>
+                                    <span class="writer mx-1" th:text="${item.member.name}"></span>
+                                    <span class="content mx-2" th:text="${item.content}"></span>
+                                    <button class="btn btn-close btn-sm"
+                                            th:if="${item.member.id == #authentication.principal.loggedMember.id}"></button>
+                                </li>
+                            </th:block>
+                        </ul>
+                    </div>
+                    <div class="mb-3 comment-box p-3"
+                         th:if="${imageInfo.member.id != #authentication.principal.loggedMember.id}">
+                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                        <button class="btn btnComment btn-dark mt-2">댓글작성</button>
+                    </div>
+                </div>
+        </div>
+    </div>
+    <script th:inline="javascript">
+        $("body").on("click",".comment-box .btnComment", function () {
+            //console.log("댓글 달렸음!!");
+            const commentList = $(this).parent().prev().find(".comment-list");
+
+            const imageID = $("#comment_image").data("image");
+            const comment = $(this).prev().val();
+            const commentBox = $(this).prev();
+            const sendData = {
+                content: comment,
+                imageID: imageID
+            }
+            $.ajax({
+                url: "/api/comment",
+                method: "POST",
+                data: sendData,
+                success: function (response) {
+                    console.log(response);
+                    if(response.insertComment == "OK") {
+                        const insertItem = `
+                            <li class="d-flex mb-1" data-idx="${response.comments.id}">
+                                <span class="profile-image"><img src="/upload/${response.comments.member.profileImageUrl}"></span>
+                                <span class="writer mx-1">${response.comments.member.name}</span>
+                                <span class="content mx-2">${response.comments.content}</span>
+                                <button class="btn btn-close btn-sm"></button>
+                            </li>`;
+                        commentList.prepend(insertItem);
+                        commentBox.val("");
+                    }
+                }
+            });
+        });
+        $("body").on("click",".comment-list li .btn-close", function () {
+            //console.log("댓글 삭제!!");
+            const _parent = $(this).parent();
+            const idx = _parent.data("idx");
+            $.ajax({
+                url: `/api/comment/${idx}`,
+                method: "DELETE",
+                success: function (response) {
+                    if(response.deleteComment == "OK") {
+                        _parent.remove();
+                    }
+                }
+            })
+        });
+    </script>
+</div>
+</html>

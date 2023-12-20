@@ -5,6 +5,7 @@ import com.ryan9025.myhomepage.dto.ImageUploadDto;
 import com.ryan9025.myhomepage.entity.Image;
 import com.ryan9025.myhomepage.service.ImageService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 @RequestMapping("/image")
 @RequiredArgsConstructor
+@Slf4j
 public class ImageController {
     private final ImageService imageService;
     @GetMapping("/feed")
@@ -40,6 +42,9 @@ public class ImageController {
 
     @GetMapping("/single/{id}")
     public String single(@PathVariable int id, Model model) {
+        Image imageInfo = imageService.loadSingle(id);
+        model.addAttribute("imageInfo",imageInfo);
+        log.info("imageInfo==={}",imageInfo.toString());
         return "/image/single";
     }
 }
