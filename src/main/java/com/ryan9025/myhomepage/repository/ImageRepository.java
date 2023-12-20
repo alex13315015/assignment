@@ -15,4 +15,12 @@ public interface ImageRepository extends JpaRepository<Image,Integer> {
             " (SELECT TOMEMBERID FROM SUBSCRIBE WHERE FROMMEMBERID = :customerDetailsID)"
             , nativeQuery = true)
     Page<Image> loadFeed(@Param("customerDetailsID") int customerDetailsID, Pageable pageable);
+
+    @Query(value = "SELECT * FROM IMAGE i " +
+            "INNER JOIN (SELECT imageID, count(imageID) AS likeCount " +
+            "FROM LIKES l " +
+            "GROUP BY IMAGEID) c " +
+            "ON i.id = c.imageID " +
+            "ORDER BY LIKECOUNT DESC", nativeQuery = true)
+    Page<Image> popular(Pageable pageable);
 }

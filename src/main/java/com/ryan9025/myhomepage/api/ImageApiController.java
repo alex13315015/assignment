@@ -9,6 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -53,4 +54,11 @@ public class ImageApiController {
         return resultMap;
     }
 
+    @GetMapping("/image/popular")
+    public Map<String,Object> popular(Model model, @PageableDefault(size = 10)Pageable pageable) {
+        Page<Image> imageList = imageService.popular(pageable);
+        Map<String,Object> resultMap = new HashMap<>();
+        resultMap.put("imageList",imageList);
+        return resultMap;
+    }
 }
