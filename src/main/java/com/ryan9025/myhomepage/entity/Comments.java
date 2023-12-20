@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
 
@@ -15,6 +16,7 @@ import java.time.LocalDateTime;
 @Builder
 @ToString
 @Entity
+@EntityListeners(AuditingEntityListener.class) // 자동으로 날짜를 생성
 public class Comments {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
