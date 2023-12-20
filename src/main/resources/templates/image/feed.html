@@ -58,8 +58,7 @@
                             <!-- 제목 -->
                             <div class="like-box p-3">
                                 <span class="like-icon" data-state=${likeState?"like" : "hate"}>
-                                <i class="bi ${likeState?"bi bi-heart-fill text-danger" : "bi-heart"} fs-4"></i>
-                                <!-- <i class=" fs-3"></i> -->
+                                 ${likeState?`<i class="bi bi-heart-fill text-danger fs-3"></i>`:`<i class="bi bi-heart fs-3"></i>`}
                                 </span>
                                 <span class="like-num">${item.likeTotal}</span>
                             </div>
